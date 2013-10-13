@@ -30,13 +30,17 @@ angular.module 'StopTheClockApp'
 
 
     handler = ->
-      date = new Date() # see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+       # see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+      date = new Date!
+
       #
       # Adding 1 for summer time.
-      # There are javascript libraries that would look up whether this is required
-      # by locale and time of year. But since we're going to delete this code shortly...
+      # There are javascript libraries that would look up whether summer time is current
+      # for your locale and time of year. 
       #
-      $scope.hours = (date.getUTCHours! + 1 + date.getTimezoneOffset!*60) % 12 
+      # But since we're going to delete this code shortly, let's just say it's summer.
+      #
+      $scope.hours = (date.getUTCHours! + 1 + date.getTimezoneOffset!*60) %% 12 
       $scope.minutes = date.getUTCMinutes!
       $timeout handler, 1000
 
