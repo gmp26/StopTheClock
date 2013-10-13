@@ -1,9 +1,12 @@
-<div class="hero-unit">
-  <h1>'Allo, 'Allo!</h1>
-  <p>You now have</p>
-  <ul>
-      <li ng-repeat="thing in awesomeThings">{{thing}}</li>
-  </ul>
-  <p><i class="icon-star icon-spin"></i> installed.</p>
-  <h3>Enjoy coding! - Yeoman</h3>
+
+<div id="vis" class="vis">
+	<div class="set-height" />
+		<div class="clock" >
+			<img src="img/clockFace.png" class="clock-image"/>
+			<img src="img/minuteShadow.png" class="clock-image-shadow" ng-style="turn('minute')" />
+			<img src="img/minuteHand.png" class="clock-image" ng-style="turn('minute')" />
+			<img src="img/hourShadow.png" class="clock-image-shadow" ng-style="turn('hour')" />
+			<img src="img/hourHand.png" class="clock-image" ng-style="turn('hour')" />
+		</div>
+	</div>
 </div>

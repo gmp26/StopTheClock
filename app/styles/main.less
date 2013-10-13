@@ -9,24 +9,40 @@ html, body {
 }
 
 body {
-    background: #fafafa;
+    background: #ffffff;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
 }
 
-.hero-unit {
-    margin: 50px auto 0 auto;
-    width: 300px;
-    font-size: 18px;
-    font-weight: 200;
-    line-height: 30px;
-    background-color: #eee;
-    border-radius: 6px;
-    padding: 60px;
+.vis {
+     display: inline-block;
+     position: relative;
+     width:100%;
 }
 
-.hero-unit h1 {
-    font-size: 60px;
-    line-height: 1;
-    letter-spacing: -1px;
+/* purpose of this is to set the height of the div to be the same as its width */
+.set-height {
+    width: 100%;
+    padding-top: 100%; /* this sets height to 100% of width; height:100% would set it to the page height */
+}
+
+.clock-image {
+    width:100%;
+    height:100%;
+    position:absolute;
+}
+
+.clock-image-shadow {
+    .clock-image;
+    top: 1.2%;   /* offset to illuminate from top */
+    left: 0.8%;   /* offset to illuminate from left */
+    opacity:0.5;   
+}
+
+.clock {
+    position: absolute; /* anything but relative so children can position absolutely */
+    width:100%;
+    height:100%;
+    left: 0px;
+    top:0px;
 }
