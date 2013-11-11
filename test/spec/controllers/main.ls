@@ -23,3 +23,5 @@ describe 'Controller: MainCtrl', (_) ->
   it 'should turn hour hand by 315deg for 10 hours and 30minutes', ->
     expect(scope.turn('hour')["-webkit-transform"]).toEqual "rotate(315deg)"
 
+  it 'should return undefined when asked about the seconds hand', ->
+    expect(scope.turn('seconds')["-webkit-transform"]).toBeUndefined()
