@@ -41,7 +41,11 @@ module.exports = (grunt) ->
 
       lsTest:
         files: ['test/spec/{,*/}*.ls']
-        tasks: ['lsc:test', 'karma:unit:run']
+        tasks: ['lsc:test']
+
+      jsTest:
+        files: ['.tmp/scripts/{,*/}*.js','.tmp/spec/{,*/}*.js']
+        tasks: ['karma:unit:run']
 
       recess:
         files: ['<%= yeoman.app %>/styles/{,*/}*.less']

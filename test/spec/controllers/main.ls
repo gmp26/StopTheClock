@@ -20,5 +20,6 @@ describe 'Controller: MainCtrl', (_) ->
   it 'should turn minutes hand by 180deg for 30 minutes', ->
     expect(scope.turn('minute')["-webkit-transform"]).toEqual "rotate(180deg)"
 
-  it 'should turn hour hand by 315deg for 10 hours and 30 mins', ->
+  it 'should turn hour hand by 315deg for 10 hours and 30minutes', ->
     expect(scope.turn('hour')["-webkit-transform"]).toEqual "rotate(315deg)"
+

@@ -15,7 +15,7 @@ angular.module 'StopTheClockApp'
       # set the turn according to the clock hand
       switch hand
         | 'minute' => turn = "rotate(#{6 * $scope.minutes}deg)"
-        | 'hour' => turn = "rotate(#{30 * $scope.hours + $scope.minutes / 2}deg)"
+        | 'hour' => turn = "rotate(#{30 * $scope.hours + $scope.minutes/2}deg)"
 
       # ng-switch will pick one of these to use dependent on the browser
       return {
