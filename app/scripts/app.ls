@@ -6,6 +6,10 @@ angular.module 'StopTheClockApp', []
       templateUrl: 'views/main.html'
       controller: 'MainCtrl'
     }
+    .when '/:hh/:mm/:step', {
+      templateUrl: 'views/main.html'
+      controller: 'MainCtrl'
+    }
     .otherwise {
       redirectTo: '/'
     }
