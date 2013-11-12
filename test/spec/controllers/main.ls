@@ -52,36 +52,36 @@ describe 'Controller: MainCtrl', (_) ->
     it 'should map / to MainCtrl', ->
       expect($route.routes['/'].controller).toBe('MainCtrl')
 
-    it 'should map /:hh/:mm/:step to MainCtrl', ->
-      expect($route.routes['/:hh/:mm/:step'].controller).toBe('MainCtrl')
+    it 'should map /:hh/:mm/:part to MainCtrl', ->
+      expect($route.routes['/:hh/:mm/:part'].controller).toBe('MainCtrl')
 
 
-  describe 'Initialising with URL routeParameters', (_) ->
+  describe 'Initialising with parameters from the URL', (_) ->
 
     #
-    # The idea is that http://nrich.maths.org/StopTheClock/#/10/30/15
+    # The idea is that http://nrich.maths.org/StopTheClock/#/10/30/4
     # will cause the animation to start the clock at 10:30 and set the
-    # minimum stepsize for the game at 15 minutes. Other step sizes will
-    # be multiples of 15 minutes up to a maximum of 60 minutes.
+    # minimum step to 1/4 hour = 15 minutes.
     #
-    # Need to ensure that 12:00 is reachable in some multiple of stepsize minutes
+    # Need to ensure that 12:00 is reachable in some multiple of partsize minutes
     # from the starting point.
     #
     # Also need to worry about digital 24 hour clock.
     #
 
     #
-    # fake some routeParameters that set up a start time of 8:20 and
-    # a step of 30
+    # fake some routeParameters that set up a start time of 3:20 and
+    # a step of 1/12 hour = 5 minutes
     #
     routeParams = {
-      hh: 8
+      hh: 3
       mm: 20
-      step: 30
+      part: 12
+      max: 12
     }
 
     # Initialize the controller and a mock scope
-    beforeEach inject ($controller, $rootScope, _$route_, $log) ->
+    beforeEach inject ($controller, $rootScope, _$route_) ->
       $scope := $rootScope.$new()
       $route := _$route_
 
@@ -94,13 +94,33 @@ describe 'Controller: MainCtrl', (_) ->
       }
 
     it 'should start at 8:XX', ->
-      expect($scope.hours).toBe 8
+      expect($scope.hours).toBe 3
 
     it 'should start at X:20', ->
       expect($scope.minutes).toBe 20
 
-    it 'should make the stepSize 30', ->
-      expect($scope.step).toBe 30
+    it 'should start at part = 30', ->
+      expect($scope.part).toBe 12
+
+    it 'should start with 12 hour target', ->
+      expect($scope.max).toBe 12
+
+    it 'should choose analog or digital properly', ->
+      expect($scope.analog 12).toBe true
+      expect($scope.analog 24).toBe false
+
+    it 'should add parts of the hour properly', ->
+      $scope.step(3)
+      expect($scope.hours).toBe 3
+      expect($scope.minutes).toBe 35
+      $scope.step(97)
+      expect($scope.hours).toBe 11
+      expect($scope.minutes).toBe 40
+
+
+
+
+
 
 
 

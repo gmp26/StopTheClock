@@ -6,7 +6,7 @@ angular.module 'StopTheClockApp', []
       templateUrl: 'views/main.html'
       controller: 'MainCtrl'
     }
-    .when '/:hh/:mm/:step', {
+    .when '/:hh/:mm/:part', {
       templateUrl: 'views/main.html'
       controller: 'MainCtrl'
     }

@@ -5,13 +5,19 @@ angular.module 'StopTheClockApp'
 
     # $scope and $timeout are provided automatically by angular dependency injection
 
-    # set a default time to 10:30
-    $scope.hours = 10
-    $scope.minutes = 30
-
+    # read initial setup from URL routeParams or take default of 10:30, 30, 12
     $scope.hours = $routeParams.hh ? 10
     $scope.minutes = $routeParams.mm ? 30
-    $scope.step = $routeParams.step ? 30
+    $scope.part = $routeParams.part ? 30
+    $scope.max = $routeParams.max ? 12
+
+    $scope.analog = (target) -> target <= 12
+
+    $scope.step = (number) !->
+      $scope.minutes += number * (60 / $scope.part)
+      while $scope.minutes > 60
+        ++$scope.hours
+        $scope.minutes -= 60
 
     # supports ng-style="turn('minute')" directive
     $scope.turn = (hand) ->
