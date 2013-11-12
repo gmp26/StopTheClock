@@ -70,8 +70,9 @@ describe 'Controller: MainCtrl', (_) ->
     #
 
     #
-    # fake some routeParameters that set up a start time of 3:20 and
-    # a step of 1/12 hour = 5 minutes
+    # Fake some routeParameters that set up a start time of 3:20 and
+    # a step of 1/12 hour = 5 minutes. It's as if we had navigated to
+    # StopTheClock/#/3/20/12/12
     #
     routeParams = {
       hh: 3
