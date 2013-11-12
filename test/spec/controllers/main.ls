@@ -6,31 +6,32 @@ describe 'Controller: MainCtrl', (_) ->
   beforeEach module 'StopTheClockApp'
 
   MainCtrl = {}
-  scope = {}
-  route = {}
+  $scope = {}
+  $route = {}
+
 
   describe 'Clock hand turns', (_) ->
 
     # Initialize the controller and a mock scope
     beforeEach inject ($controller, $rootScope) ->
-      scope := $rootScope.$new()
-      scope.hours = 10
-      scope.minutes = 30
+      $scope := $rootScope.$new()
+      $scope.hours = 10
+      $scope.minutes = 30
       MainCtrl := $controller 'MainCtrl', {
-        $scope: scope
+        $scope: $scope
       }
 
     #
     # Turn tests
     #
     it 'should turn minutes hand by 180deg for 30 minutes', ->
-      expect(scope.turn('minute')["-webkit-transform"]).toEqual "rotate(180deg)"
+      expect($scope.turn('minute')["-webkit-transform"]).toEqual "rotate(180deg)"
 
     it 'should turn hour hand by 315deg for 10 hours and 30minutes', ->
-      expect(scope.turn('hour')["-webkit-transform"]).toEqual "rotate(315deg)"
+      expect($scope.turn('hour')["-webkit-transform"]).toEqual "rotate(315deg)"
 
     it 'should return undefined when asked about the seconds hand', ->
-      expect(scope.turn('seconds')["-webkit-transform"]).toBeUndefined()
+      expect($scope.turn('seconds')["-webkit-transform"]).toBeUndefined()
 
   describe 'URL route mapping', (_) ->
 
@@ -40,19 +41,19 @@ describe 'Controller: MainCtrl', (_) ->
     #
 
     # Initialize the controller and a mock scope
-    beforeEach inject ($controller, $rootScope, $route) ->
-      scope := $rootScope.$new()
-      route := $route
+    beforeEach inject ($controller, $rootScope, _$route_) ->
+      $scope := $rootScope.$new()
+      $route := _$route_
 
       MainCtrl := $controller 'MainCtrl', {
-        $scope: scope
+        $scope: $scope
       }
 
     it 'should map / to MainCtrl', ->
-      expect(route.routes['/'].controller).toBe('MainCtrl')
+      expect($route.routes['/'].controller).toBe('MainCtrl')
 
     it 'should map /:hh/:mm/:step to MainCtrl', ->
-      expect(route.routes['/:hh/:mm/:step'].controller).toBe('MainCtrl')
+      expect($route.routes['/:hh/:mm/:step'].controller).toBe('MainCtrl')
 
 
   describe 'Initialising with URL routeParameters', (_) ->
@@ -69,14 +70,41 @@ describe 'Controller: MainCtrl', (_) ->
     # Also need to worry about digital 24 hour clock.
     #
 
-    # Initialize the controller and a mock scope
-    beforeEach inject ($controller, $rootScope, $route) ->
-      scope := $rootScope.$new()
-      route := $route
+    #
+    # fake some routeParameters that set up a start time of 8:20 and
+    # a step of 30
+    #
+    routeParams = {
+      hh: 8
+      mm: 20
+      step: 30
+    }
 
+    # Initialize the controller and a mock scope
+    beforeEach inject ($controller, $rootScope, _$route_, $log) ->
+      $scope := $rootScope.$new()
+      $route := _$route_
+
+      # We expect angular to strip $routeParameters from the URL
+      # and inject them into the MainCtrl function if it
+      # has a $routeParameters parameter.
       MainCtrl := $controller 'MainCtrl', {
-        $scope: scope
+        $scope: $scope
+        $routeParams: routeParams
       }
+
+    it 'should start at 8:XX', ->
+      expect($scope.hours).toBe 8
+
+    it 'should start at X:20', ->
+      expect($scope.minutes).toBe 20
+
+    it 'should make the stepSize 30', ->
+      expect($scope.step).toBe 30
+
+
+
+
 
 
 
