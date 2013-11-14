@@ -8,19 +8,48 @@ angular.module 'StopTheClockApp'
     #
     # When testing, we provide our own replacements for these
     #
+    hh = ~~($routeParams.hh ? 10)
+    mm = ~~($routeParams.mm ? 30)
+    $scope.gameSetup = {
+      hours: hh
+      minutes: mm
+      part: ~~($routeParams.part ? 30)  # the part of an hour to step by
+      max: ~~($routeParams.max ? 12)    # 12 hour analog or 24 hour digital
+    }
 
-    for k,v of $timeout
-      $log.log "$timeout[#{k}] = #{v}"
+    $scope.setup = ->
+      g = $scope.gameSetup
+      g.hours = Math.floor(g.time / 60)
+      g.minutes = g.time - g.hours*60
+      $scope.reset!
+
+    #
+    # Put a watch on $scope.gameSetup.minutes to check for an hour carry
+    #
+    $scope.$watch $scope.gameSetup.minutes, (oldValue, newValue) ->
+      if newValue >= 60
+        if $scope.gameSetup.hours < $scope.max
+          $scope.gameSetup.minutes = 0
+          $scope.gameSetup.hours = $scope.gameSetup.hours + 1
+        else
+          $scope.gameSetup.minutes = 55
+      else if newValue < 0
+        if $scope.gameSetup.hours > 0
+          $scope.gameSetup.minutes = 55
+          $scope.gameSetup.hours = $scope.gameSetup.hours - 1
+        else
+          $scope.gameSetup.minutes = 0
+
 
     $scope.reset = ->
       # read initial setup from URL routeParams or take default of 10:30, 30, 12
       #
       # NB. ~~"24" == 24
       #
-      $scope.hours = ~~($routeParams.hh ? 10)
-      $scope.minutes = ~~($routeParams.mm ? 30)
-      $scope.part = ~~($routeParams.part ? 30)  # the part of an hour to step by
-      $scope.max = ~~($routeParams.max ? 12)    # 12 hour analog or 24 hour digital
+      $scope.hours = $scope.gameSetup.hours
+      $scope.minutes = $scope.gameSetup.minutes
+      $scope.part = $scope.gameSetup.part
+      $scope.max = $scope.gameSetup.max
       $scope.analog = $scope.max == 12     # choose type based on max value
       $scope.player = 1
       $scope.gameOver = false       # true if game is over

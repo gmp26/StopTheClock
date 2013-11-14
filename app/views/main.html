@@ -1,6 +1,7 @@
 
+
 <div ng-hide="analog">
-<h2>The time is {{hours}}:{{minutes}}</h2>
+<h1>{{hours}}:{{minutes}}</h1>
 </div>
 
 <div ng-show="analog">
@@ -17,3 +18,41 @@
   	</div>
   </div>
 </div>
+
+<h2>Change the game</h2>
+<form name="setup" class="form-horizontal">
+  <div class="control-group">
+    <div class="controls">
+      <label for="start-hour">Start hour:</label>
+      <input
+        name="start-hour"
+        type="number"
+        min="0"
+        max="{{max-1}}"
+        ng-model="gameSetup.hours"
+      >
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <label for="start-minute">Start minute:</label>
+      <!-- bracket allowed values (0-55) so we can carry to hours -->
+      <input
+        name="start-minutes"
+        type="number"
+        min="-5"
+        max="60"
+        step="5"
+        ng-model="gameSetup.minutes"
+      >
+  </div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <label class="checkbox">
+        <input type="checkbox" ng-model="analog"> Analog?
+      </label>
+      <button type="submit" class="btn" ngClick="setup()">Restart</button>
+    </div>
+  </div>
+</form>

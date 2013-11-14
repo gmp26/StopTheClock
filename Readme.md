@@ -20,7 +20,9 @@ For this step we're going to need some user interface widgets. These will mostly
     It seems that unless we use the wildcard URL syntax [it's changing in angular v1.2](http://docs.angularjs.org/guide/migration#syntax-for-named-wildcard-parameters-changed-in), we must provide routes for all likely options
     - i.e. for all options implied by :hh/:mm[/:part[/:max]]. Edited apps.js to do this.
 
-2.  We edit the `app/views/main.html` and wrap the analog and digital clocks in divs with `ng-show="analog"` and `ng-hide="analog"`, and test http://localhost:9000/#/8/30/2/12 and http://localhost:9000/#/8/30/2/24. Both show the analog clock.
+    Commit c1235d48d85eed6474b9af866dfc89d33e47a120
+
+1.  We edit the `app/views/main.html` and wrap the analog and digital clocks in divs with `ng-show="analog"` and `ng-hide="analog"`, and test http://localhost:9000/#/8/30/2/12 and http://localhost:9000/#/8/30/2/24. Both show the analog clock.
 
     Setting a breakpoint at `app/controllers/main.js` reveals that URL parameters are coming in as strings, but the code tests for numbers. Let's change our tests so the fake routeParameters are all strings, and rework.
 
@@ -38,4 +40,6 @@ For this step we're going to need some user interface widgets. These will mostly
     And we rework function $scope.reset to read these in as numbers. Tests then pass again, and the app now shows an analog or
     digital clock correctly.
 
+    Commit bef5fc4508a102a0b71070d370f95ac4f102e81e
 
+1.  Let's add a start time control.
