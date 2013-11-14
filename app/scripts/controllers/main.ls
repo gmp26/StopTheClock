@@ -14,10 +14,13 @@ angular.module 'StopTheClockApp'
 
     $scope.reset = ->
       # read initial setup from URL routeParams or take default of 10:30, 30, 12
-      $scope.hours = $routeParams.hh ? 10
-      $scope.minutes = $routeParams.mm ? 30
-      $scope.part = $routeParams.part ? 30  # the part of an hour to step by
-      $scope.max = $routeParams.max ? 12    # 12 hour analog or 24 hour digital
+      #
+      # NB. ~~"24" == 24
+      #
+      $scope.hours = ~~($routeParams.hh ? 10)
+      $scope.minutes = ~~($routeParams.mm ? 30)
+      $scope.part = ~~($routeParams.part ? 30)  # the part of an hour to step by
+      $scope.max = ~~($routeParams.max ? 12)    # 12 hour analog or 24 hour digital
       $scope.analog = $scope.max == 12     # choose type based on max value
       $scope.player = 1
       $scope.gameOver = false       # true if game is over
@@ -45,12 +48,12 @@ angular.module 'StopTheClockApp'
         $scope.minutes -= 60
 
       # detect end of game
-      if $scope.hours == 12 and $scope.minutes == 0
+      if $scope.hours == $scope.max and $scope.minutes == 0
         $scope.gameOver = true
         $scope.winner = $scope.player
 
-      if $scope.hours > 12 or ($scope.hours == 12 and $scope.minutes > 0)
-        # we've gone past 12:00, disable the controls
+      if $scope.hours > $scope.max or ($scope.hours == $scope.max and $scope.minutes > 0)
+        # we've gone past 12:00 or 24:00, disable the controls
         $scope.disabled = true
 
         # And set a 1 second timeout to revert clock

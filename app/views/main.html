@@ -1,15 +1,19 @@
 
+<div ng-hide="analog">
 <h2>The time is {{hours}}:{{minutes}}</h2>
+</div>
 
-<div id="vis" class="vis">
-	<div class="set-height" />
-		<div class="clock" >
-			<img src="img/clockFace.png" class="clock-image"/>
-			<img src="img/minuteShadow.png" class="clock-image-shadow" ng-style="turn('minute')" />
-			<img src="img/minuteHand.png" class="clock-image" ng-style="turn('minute')" />
-			<img src="img/hourShadow.png" class="clock-image-shadow" ng-style="turn('hour')" />
-      <img src="img/hourHand.png" class="clock-image" ng-style="turn('hour')" />
-			<img src="img/axis.png" class="clock-image" />
-		</div>
-	</div>
+<div ng-show="analog">
+  <div id="vis" class="vis">
+  	<div class="set-height" />
+  		<div class="clock" >
+  			<img src="img/clockFace.png" class="clock-image"/>
+  			<img src="img/minuteShadow.png" class="clock-image-shadow" ng-style="turn('minute')" />
+  			<img src="img/minuteHand.png" class="clock-image" ng-style="turn('minute')" />
+  			<img src="img/hourShadow.png" class="clock-image-shadow" ng-style="turn('hour')" />
+        <img src="img/hourHand.png" class="clock-image" ng-style="turn('hour')" />
+  			<img src="img/axis.png" class="clock-image" />
+  		</div>
+  	</div>
+  </div>
 </div>

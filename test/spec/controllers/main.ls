@@ -80,10 +80,10 @@ describe 'Controller: MainCtrl', (_) ->
     # StopTheClock/#/3/20/12/12
     #
     routeParams = {
-      hh: 3
-      mm: 20
-      part: 12
-      max: 12
+      hh: "3"
+      mm: "20"
+      part: "12"
+      max: "12"
     }
 
     # Initialize the controller and a mock scope
@@ -203,10 +203,10 @@ describe 'Controller: MainCtrl', (_) ->
     # StopTheClock/#/3/20/2/24
     #
     routeParams = {
-      hh: 3
-      mm: 20
-      part: 2
-      max: 24
+      hh: "3"
+      mm: "20"
+      part: "2"
+      max: "24"
     }
 
     # Initialize the controller and a mock scope
