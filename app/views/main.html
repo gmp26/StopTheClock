@@ -22,23 +22,25 @@
 <h2>Change the game</h2>
 <form name="setup" class="form-horizontal">
   <div class="control-group">
+    <label for="start-hour" class="control-label">Hour </label>
     <div class="controls">
-      <label for="start-hour">Start hour:</label>
       <input
+        class="input-mini"
         name="start-hour"
         type="number"
         min="0"
-        max="{{max-1}}"
+        max="{{gameSetup.max-1}}"
         required
         ng-model="gameSetup.hours"
       >
     </div>
   </div>
+    <!-- bracket allowed values (0-55) so we can carry to hours -->
   <div class="control-group">
+    <label for="start-minutes" class="control-label">Minute </label>
     <div class="controls">
-      <label for="start-minute">Start minute:</label>
-      <!-- bracket allowed values (0-55) so we can carry to hours -->
       <input
+        class="input-mini"
         name="start-minutes"
         type="number"
         min="-5"
@@ -49,12 +51,13 @@
       >
     </div>
   </div>
+  
   <div class="control-group">
     <div class="controls">
       <label class="checkbox">
-        <input type="checkbox" ng-model="analog"> Analog?
+        <input type="checkbox" ng-model="gameSetup.analog"> Analog?
       </label>
-      <button class="btn" ng-click="setupStart()">Restart</button>
+      <button class="btn" ng-click="setupGame()">Restart</button>
     </div>
   </div>
 </form>
