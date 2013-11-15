@@ -57,5 +57,5 @@ For this step we're going to need some user interface widgets. These will mostly
 
     Changed the `reset` function so it reads the new gameSetup settings, and changed the initialisation code so gameSetup is initialised from routeParameters. Tests still pass.
 
-     
+    Commit ff16ca759bdf35fada87699f080b334453166704
 
