@@ -2,5 +2,4 @@ node_modules
 dist
 .tmp
 .sass-cache
-yo.log
 app/bower_components

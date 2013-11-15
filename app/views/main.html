@@ -6,16 +6,16 @@
 
 <div ng-show="analog">
   <div id="vis" class="vis">
-  	<div class="set-height" />
-  		<div class="clock" >
-  			<img src="img/clockFace.png" class="clock-image"/>
-  			<img src="img/minuteShadow.png" class="clock-image-shadow" ng-style="turn('minute')" />
-  			<img src="img/minuteHand.png" class="clock-image" ng-style="turn('minute')" />
-  			<img src="img/hourShadow.png" class="clock-image-shadow" ng-style="turn('hour')" />
+    <div class="set-height" />
+      <div class="clock" >
+        <img src="img/clockFace.png" class="clock-image"/>
+        <img src="img/minuteShadow.png" class="clock-image-shadow" ng-style="turn('minute')" />
+        <img src="img/minuteHand.png" class="clock-image" ng-style="turn('minute')" />
+        <img src="img/hourShadow.png" class="clock-image-shadow" ng-style="turn('hour')" />
         <img src="img/hourHand.png" class="clock-image" ng-style="turn('hour')" />
-  			<img src="img/axis.png" class="clock-image" />
-  		</div>
-  	</div>
+        <img src="img/axis.png" class="clock-image" />
+      </div>
+    </div>
   </div>
 </div>
 
@@ -29,6 +29,7 @@
         type="number"
         min="0"
         max="{{max-1}}"
+        required
         ng-model="gameSetup.hours"
       >
     </div>
@@ -43,16 +44,17 @@
         min="-5"
         max="60"
         step="5"
+        required
         ng-model="gameSetup.minutes"
       >
-  </div>
+    </div>
   </div>
   <div class="control-group">
     <div class="controls">
       <label class="checkbox">
         <input type="checkbox" ng-model="analog"> Analog?
       </label>
-      <button type="submit" class="btn" ngClick="setup()">Restart</button>
+      <button class="btn" ng-click="setupStart()">Restart</button>
     </div>
   </div>
 </form>

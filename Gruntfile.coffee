@@ -1,4 +1,4 @@
-# Generated on 2013-10-07 using generator-angular-ls 0.3.1
+# Generated on 2013-11-15 using generator-angular-ls 0.3.1
 'use strict'
 
 LIVERELOAD_PORT = 35729
@@ -47,9 +47,11 @@ module.exports = (grunt) ->
         files: ['.tmp/scripts/{,*/}*.js','.tmp/spec/{,*/}*.js']
         tasks: ['karma:unit:run']
 
+
       recess:
         files: ['<%= yeoman.app %>/styles/{,*/}*.less']
         tasks: ['recess']
+
 
       styles:
         files: ['<%= yeoman.app %>/styles/{,*/}*.css']
@@ -293,8 +295,6 @@ module.exports = (grunt) ->
           src: [
             '*.{ico,png,txt}'
             '.htaccess',
-
-            'bower_components/jquery/jquery.js'
 
             'bower_components/angular*/**/*.js'
             '!bower_components/angular*/**/*.min.js'

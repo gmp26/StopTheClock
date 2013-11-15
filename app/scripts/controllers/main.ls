@@ -3,10 +3,10 @@
 angular.module 'StopTheClockApp'
   .controller 'MainCtrl', ($scope, $routeParams, $timeout, $log) ->
 
-    # $scope, $routePrams, and $timeout are provided automatically
+    # $scope, $routeParams, and $timeout are provided automatically
     # by angular dependency injection.
     #
-    # When testing, we provide our own replacements for these
+    # When testing, we provide fake values for these
     #
     hh = ~~($routeParams.hh ? 10)
     mm = ~~($routeParams.mm ? 30)
@@ -17,10 +17,8 @@ angular.module 'StopTheClockApp'
       max: ~~($routeParams.max ? 12)    # 12 hour analog or 24 hour digital
     }
 
-    $scope.setup = ->
+    $scope.setupStart = !->
       g = $scope.gameSetup
-      g.hours = Math.floor(g.time / 60)
-      g.minutes = g.time - g.hours*60
       $scope.reset!
 
     #
@@ -41,7 +39,7 @@ angular.module 'StopTheClockApp'
           $scope.gameSetup.minutes = 0
 
 
-    $scope.reset = ->
+    $scope.reset = !->
       # read initial setup from URL routeParams or take default of 10:30, 30, 12
       #
       # NB. ~~"24" == 24
