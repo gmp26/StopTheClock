@@ -42,4 +42,20 @@ For this step we're going to need some user interface widgets. These will mostly
 
     Commit bef5fc4508a102a0b71070d370f95ac4f102e81e
 
-1.  Let's add a start time control.
+1.  Adding *Change the game* controls.
+    
+    Introduces a new gameSetup object in the application scope, which is connected to hour and minute inputs (using ng-model) and an analog or digital clock-type checkbox (also using ng-model).
+
+    Note that ng-model references variables via gameSetup so 2-way binding
+    is preserved. See [this egghead video](http://egghead.io/lessons/angularjs-the-dot) for an explanation of why this is important.
+
+    There's some trickiness associated with the minute to hour carry that requires us to place a watch on gameSetup.minutes looking for potential carries.
+
+    In the HTML we're making heavy use of Bootstrap classes to control the look and feel.
+
+    The *Change the game* controls are placed inside a `<form>` - which is actually another angular directive. This allows us to place `min` and `max` values on the inputs, and also a `required` attribute to ensure that the form is validated. Try typing in an invalid value - e.g. a decimal, or blanking one of the fields.
+
+    Changed the `reset` function so it reads the new gameSetup settings, and changed the initialisation code so gameSetup is initialised from routeParameters. Tests still pass.
+
+     
+
