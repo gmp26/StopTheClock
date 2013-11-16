@@ -6,7 +6,7 @@ A Nim like game designed to give young children practice in handling time while 
 Step4
 -----
 
-Starting to connect the view up to the game model.
+Connecting the view up to the game model.
 
 NB: In this branch we've upgraded angular, and pulled in the angular-ui/bootstrap library. These changes are recorded in `bower.json`, so 
 a `bower update` command will cause the new installations to happen. 
@@ -61,13 +61,12 @@ For this step we're going to need some user interface widgets. These will mostly
 
     Changed the `reset` function so it reads the new gameSetup settings, and changed the initialisation code so gameSetup is initialised from routeParameters. Tests still pass.
 
+<<<<<<< HEAD
     Note that the [Timepicker](http://angular-ui.github.io/bootstrap/) widget
     would have been an alternative here.
 
     Also used the [Collapse widget](http://angular-ui.github.io/bootstrap/) to
     reveal/hide game settings. The cog in the button comes from font-awesome.
-
-    Commit ff16ca759bdf35fada87699f080b334453166704
 
 1.  Added some styling to main.less to improve the look of the analog clock,
     the game settings area and the improve the game settings button behaviour
@@ -77,4 +76,7 @@ For this step we're going to need some user interface widgets. These will mostly
     with a filter - so we'll leave it till Step5.
 
 
+=======
+    Commit ff16ca759bdf35fada87699f080b334453166704
+>>>>>>> 59a389e519754cf2164445d427050f2484043dd6
 

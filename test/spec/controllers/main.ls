@@ -22,11 +22,24 @@ describe 'Controller: MainCtrl', (_) ->
       # closure, outside the local scope of the function.
 
       $scope := $rootScope.$new()
-      $scope.hours = 10
-      $scope.minutes = 30
+      $scope.hours = 6
+      $scope.minutes = 0
+
+      #
+      # Fake some routeParameters that set up a start time of 10:30 and
+      # a step of 1/12 hour = 5 minutes. It's as if we had navigated to
+      # StopTheClock/#/10/30/12/12
+      #
+      routeParams = {
+        hh: "10"
+        mm: "30"
+        part: "12"
+        max: "12"
+      }
+
       MainCtrl := $controller 'MainCtrl', {
         $scope: $scope,
-        $routeParams: {}
+        $routeParams: routeParams
         $timeout: $timeout
       }
 
