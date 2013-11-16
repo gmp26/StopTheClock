@@ -1,63 +1,98 @@
 
+<div class="row">
 
-<div ng-hide="analog">
-<h1>{{hours}}:{{minutes}}</h1>
-</div>
+  <div ng-hide="analog" class="span8 offset2">
+  <h1 class="digital-clock">{{hours}}:{{minutes}}</h1>
+  </div>
 
-<div ng-show="analog">
-  <div id="vis" class="vis">
-    <div class="set-height" />
-      <div class="clock" >
-        <img src="img/clockFace.png" class="clock-image"/>
-        <img src="img/minuteShadow.png" class="clock-image-shadow" ng-style="turn('minute')" />
-        <img src="img/minuteHand.png" class="clock-image" ng-style="turn('minute')" />
-        <img src="img/hourShadow.png" class="clock-image-shadow" ng-style="turn('hour')" />
-        <img src="img/hourHand.png" class="clock-image" ng-style="turn('hour')" />
-        <img src="img/axis.png" class="clock-image" />
+  <div ng-show="analog" class="span8 offset2">
+    <div id="vis" class="vis">
+      <div class="set-height" />
+        <div class="clock" >
+          <img src="img/clockFace.png" class="clock-image"/>
+          <img src="img/minuteShadow.png" class="clock-image-shadow" ng-style="turn('minute')" />
+          <img src="img/minuteHand.png" class="clock-image" ng-style="turn('minute')" />
+          <img src="img/hourShadow.png" class="clock-image-shadow" ng-style="turn('hour')" />
+          <img src="img/hourHand.png" class="clock-image" ng-style="turn('hour')" />
+          <img src="img/axis.png" class="clock-image" />
+        </div>
       </div>
     </div>
   </div>
+
 </div>
 
-<h2>Change the game</h2>
-<form name="setup" class="form-horizontal">
-  <div class="control-group">
-    <label for="start-hour" class="control-label">Hour </label>
-    <div class="controls">
-      <input
-        class="input-mini"
-        name="start-hour"
-        type="number"
-        min="0"
-        max="{{gameSetup.max-1}}"
-        required
-        ng-model="gameSetup.hours"
-      >
-    </div>
+<div id="settings" class="well">
+  <button class="btn reveal" ng-click="hideSettings = !hideSettings" >
+    <span class="icon-cog"> Game settings</span>
+  </button>
+ 
+  <div collapse="hideSettings" style="position:relative;top:30px">
+    <form name="setup" class="form-horizontal">
+
+      <h4>Smallest step allowed</h4>
+      <div class="control-group">
+        <label class="control-label">{{60/gameSetup.part}} minutes</label>
+        <div class="controls dropdown">
+          <a class="btn dropdown-toggle" href="#">
+            Change
+          </a>
+          <ul class="dropdown-menu">
+            <li ng-repeat="stepSize in stepSizes">
+              <a ng-click="setStepSize($index)">{{stepSize}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <h4>Start time</h4>
+      <div class="control-group">
+        <label for="start-hour" class="control-label">Hour </label>
+        <div class="controls">
+          <input
+            class="input-mini"
+            name="start-hour"
+            type="number"
+            min="0"
+            max="{{gameSetup.max-1}}"
+            required
+            ng-model="gameSetup.hours"
+          >
+        </div>
+      </div>
+
+      <!-- bracket allowed values (0-55) so we can carry to hours -->
+      <div class="control-group">
+        <label for="start-minutes" class="control-label">Minute </label>
+        <div class="controls">
+          <input
+            class="input-mini"
+            name="start-minutes"
+            type="number"
+            min="-5"
+            max="60"
+            step="5"
+            required
+            ng-model="gameSetup.minutes"
+          >
+        </div>
+      </div>
+
+      <h4>Clock type</h4>
+      <div class="control-group">
+        <label class="control-label">Analog?</label>
+        <div class="controls">
+          <input type="checkbox" ng-model="gameSetup.analog">
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="controls">
+          <a class="btn btn-primary" href="/#/{{gameSetup.hours}}/{{gameSetup.minutes}}/{{gameSetup.part}}/{{gameSetup.max}}">Load new game</a>
+        </div>
+      </div>
+
+    </form>
   </div>
-    <!-- bracket allowed values (0-55) so we can carry to hours -->
-  <div class="control-group">
-    <label for="start-minutes" class="control-label">Minute </label>
-    <div class="controls">
-      <input
-        class="input-mini"
-        name="start-minutes"
-        type="number"
-        min="-5"
-        max="60"
-        step="5"
-        required
-        ng-model="gameSetup.minutes"
-      >
-    </div>
-  </div>
-  
-  <div class="control-group">
-    <div class="controls">
-      <label class="checkbox">
-        <input type="checkbox" ng-model="gameSetup.analog"> Analog?
-      </label>
-      <button class="btn" ng-click="setupGame()">Restart</button>
-    </div>
-  </div>
-</form>
+</div>
+

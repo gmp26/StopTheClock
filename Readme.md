@@ -8,6 +8,10 @@ Step4
 
 Connecting the view up to the game model.
 
+NB: In this branch we've upgraded angular, and pulled in the angular-ui/bootstrap library. These changes are recorded in `bower.json`, so 
+a `bower update` command will cause the new installations to happen. 
+`Bower` is reponsible rather than `npm`, since this is a client-side change.
+
 For this step we're going to need some user interface widgets. These will mostly come from [`Bootstrap` (v2.3.2 for now)](http://getbootstrap.com/2.3.2/). If we need to use the components that depend on javascript, we'll pull in [`angular-ui/bootstrap`](http://angular-ui.github.io/bootstrap/). At time of writing `angular-ui` had not released stable code for `bootstrap-3`.
 
 1. Let's start by checking that the routeParameters that we tested work in the real app.
@@ -57,5 +61,18 @@ For this step we're going to need some user interface widgets. These will mostly
 
     Changed the `reset` function so it reads the new gameSetup settings, and changed the initialisation code so gameSetup is initialised from routeParameters. Tests still pass.
 
-     
+    Note that the [Timepicker](http://angular-ui.github.io/bootstrap/) widget
+    would have been an alternative here.
+
+    Also used the [Collapse widget](http://angular-ui.github.io/bootstrap/) to
+    reveal/hide game settings. The cog in the button comes from font-awesome.
+
+1.  Added some styling to main.less to improve the look of the analog clock,
+    the game settings area and the improve the game settings button behaviour
+    which had a dead zone.
+
+    The analog clock shows single digits incorrectly, but this is best fixed
+    with a filter - so we'll leave it till Step5.
+
+
 

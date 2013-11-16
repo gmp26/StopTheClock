@@ -8,15 +8,24 @@ angular.module 'StopTheClockApp'
     #
     # When testing, we provide fake values for these
     #
-    hh = ~~($routeParams.hh ? 10)
-    mm = ~~($routeParams.mm ? 30)
+    hh = ~~($routeParams.hh ? 6)
+    mm = ~~($routeParams.mm ? 0)
     $scope.gameSetup = {
       hours: hh
       minutes: mm
       part: ~~($routeParams.part ? 30)  # the part of an hour to step by
       max: ~~($routeParams.max ? 12)    # 12 hour analog or 24 hour digital
-      analog: true
+      analog: ~~($routeParams.max ? 12) == 12
     }
+
+    # Initially hide game change settings
+    $scope.hideSettings = true;
+
+    $scope.stepSizes = [5,10,15,20,30,60]
+
+    $scope.setStepSize = (index) ->
+      stepSize = $scope.stepSizes[index]
+      $scope.gameSetup.part = 60 / stepSize
 
     $scope.setupGame = !->
       $scope.reset!
@@ -24,7 +33,7 @@ angular.module 'StopTheClockApp'
     #
     # Put a watch on $scope.gameSetup.minutes to check for an hour carry
     #
-    $scope.$watch 'gameSetup.minutes', (newValue, oldValue) !->
+    $scope.$watch 'gameSetup.minutes', (newValue) !->
       if newValue >= 60
         if $scope.gameSetup.hours + 1 < $scope.gameSetup.max
           $scope.gameSetup.minutes = 0
@@ -44,22 +53,8 @@ angular.module 'StopTheClockApp'
     $scope.$watch 'gameSetup.analog', (newValue) !->
       $scope.gameSetup.max = if $scope.gameSetup.analog then 12 else 24
 
-    # $scope.changeMinutes = ->
-    #   if $scope.gameSetup.minutes >= 60
-    #     if $scope.gameSetup.hours < $scope.max
-    #       $scope.gameSetup.minutes = 0
-    #       $scope.gameSetup.hours = $scope.gameSetup.hours + 1
-    #     else
-    #       $scope.gameSetup.minutes = 55
-    #   else if newValue < 0
-    #     if $scope.gameSetup.hours > 0
-    #       $scope.gameSetup.minutes = 55
-    #       $scope.gameSetup.hours = $scope.gameSetup.hours - 1
-    #     else
-    #       $scope.gameSetup.minutes = 0
-
     $scope.reset = !->
-      # read initial setup from URL routeParams or take default of 10:30, 30, 12
+      # read initial setup from URL routeParams or take default of 6:00, 30, 12
       #
       # NB. ~~"24" == 24
       #
