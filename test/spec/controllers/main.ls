@@ -303,7 +303,10 @@ describe 'Controller: MainCtrl', (_) ->
       # This is probably what we want since we can make it a problem.
       #
 
-
+    it 'should return a list of valid steps to take at each turn', ->
+      expect($scope.steps.length).toBe 2
+      expect($scope.steps.0).toBe 30
+      expect($scope.steps.1).toBe 60
 
 
 

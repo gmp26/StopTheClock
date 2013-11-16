@@ -13,7 +13,7 @@ angular.module 'StopTheClockApp'
     $scope.gameSetup = {
       hours: hh
       minutes: mm
-      part: ~~($routeParams.part ? 30)  # the part of an hour to step by
+      part: ~~($routeParams.part ? 4)  # the part of an hour to step by
       max: ~~($routeParams.max ? 12)    # 12 hour analog or 24 hour digital
       analog: ~~($routeParams.max ? 12) == 12
     }
@@ -67,6 +67,9 @@ angular.module 'StopTheClockApp'
       $scope.gameOver = false       # true if game is over
       $scope.winner = null          # the winner number
       $scope.disabled = false       # disables controls if true
+      stepSize = 60/$scope.part
+      $scope.steps = for i til $scope.part
+        (i+1) * stepSize
 
     $scope.reset!
 
@@ -101,7 +104,7 @@ angular.module 'StopTheClockApp'
         $timeout ->
           $scope.hours = hh_original
           $scope.minutes = mm_original
-        , 1000ms, false
+        , 1500ms, true
         #
         # that last false parameter is necessary to get the tests working
         # It prevents the timer callback function being wrapped in a $scope.$apply call.
@@ -118,7 +121,7 @@ angular.module 'StopTheClockApp'
 
       # set the turn according to the clock hand
       switch hand
-        | 'minute' => turn = "rotate(#{6 * $scope.minutes}deg)"
+        | 'minute' => turn = "rotate(#{6 * $scope.minutes + 360*$scope.hours}deg)"
         | 'hour' => turn = "rotate(#{30 * $scope.hours + $scope.minutes/2}deg)"
 
       # ng-switch will pick one of these to use dependent on the browser
@@ -129,4 +132,10 @@ angular.module 'StopTheClockApp'
         "-o-transform": turn
         "-transform": turn
       }
+
+    $scope.gameStatus = ->
+      if $scope.gameOver
+        "Player #{$scope.winner} wins!"
+      else
+        "Player #{$scope.player} goes next"
 
