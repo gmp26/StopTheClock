@@ -9,6 +9,7 @@ describe 'Controller: MainCtrl', (_) ->
   $scope = {}
   $route = {}
   $timeout = {}
+  $httpBackend = {}
 
 
   describe 'Clock hand turns', (_) ->
@@ -103,10 +104,11 @@ describe 'Controller: MainCtrl', (_) ->
     }
 
     # Initialize the controller and a mock scope
-    beforeEach inject ($controller, $rootScope, _$route_, _$timeout_) ->
+    beforeEach inject ($controller, $rootScope, _$route_, _$timeout_, _$httpBackend_) ->
       $scope := $rootScope.$new()
       $route := _$route_
       $timeout := _$timeout_  # accesses the $timeout in angular_mocks
+      $httpBackend := _$httpBackend_
 
       # We expect angular to strip $routeParameters from the URL
       # and inject them into the MainCtrl function if it
@@ -158,7 +160,6 @@ describe 'Controller: MainCtrl', (_) ->
       expect($scope.winner).toBe 1
       expect($scope.gameOver).toBe true
 
-
     it 'should detect a player 2 win', ->
       $scope.hours = 11
       $scope.minutes = 0
@@ -197,9 +198,16 @@ describe 'Controller: MainCtrl', (_) ->
       $scope.player = 1
       $scope.step 2
 
+      # Tricky: the $httpBackend mock receives a GET request, so we must 
+      # tell it to expect it.
+      $httpBackend.whenGET('views/main.html').respond { hours: 10,minutes:30 }
+      $httpBackend.expectGET 'views/main.html'
+
       # flush out all outstanding $timeout events
       # We're using the mock $timeout function from angular_mocks.js here
       $timeout.flush 20000ms
+
+      $httpBackend.flush()
 
       expect($scope.hours).toBe 11
       expect($scope.minutes).toBe 30
@@ -226,10 +234,11 @@ describe 'Controller: MainCtrl', (_) ->
     }
 
     # Initialize the controller and a mock scope
-    beforeEach inject ($controller, $rootScope, _$route_, _$timeout_) ->
+    beforeEach inject ($controller, $rootScope, _$route_, _$timeout_, _$httpBackend_) ->
       $scope := $rootScope.$new()
       $route := _$route_
       $timeout := _$timeout_  # accesses the $timeout in angular_mocks
+      $httpBackend := _$httpBackend_
 
       # MaintCtrl expects angular to provide $routeParameters stripped from the URL
       MainCtrl := $controller 'MainCtrl', {
@@ -290,10 +299,17 @@ describe 'Controller: MainCtrl', (_) ->
       $scope.player = 1
       $scope.step 2
 
+      # Tricky: the $httpBackend mock receives a GET request, so we must 
+      # tell it to expect something - we can respond with anything really.
+      $httpBackend.whenGET('views/main.html').respond {}
+      $httpBackend.expectGET 'views/main.html'
+
       # flush out all outstanding $timeout events
       # We're using the mock $timeout function from angular_mocks.js
       # flush all events for 1000ms
       $timeout.flush 20000ms
+
+      $httpBackend.flush()
 
       expect($scope.hours).toBe 23
       expect($scope.minutes).toBe 30

@@ -13,6 +13,7 @@ angular.module 'StopTheClockApp'
     hh = Math.round ~~($routeParams.hh ? 6)
     mm = Math.round ~~($routeParams.mm ? 0)
 
+    # validate stepSize
     stepSize = Math.round ~~($routeParams.stepSize ? 15)
     while 60 % stepSize
       stepSize = stepSize + 1
@@ -121,7 +122,7 @@ angular.module 'StopTheClockApp'
           $scope.hours = hh_original
           $scope.minutes = mm_original
           $scope.disabled = false
-        , 1500ms, false
+        , 1500ms, true
         #
         # that last false parameter is necessary to get the tests working
         # It prevents the timer callback function being wrapped in a $scope.$apply call.
@@ -152,13 +153,14 @@ angular.module 'StopTheClockApp'
 
     $scope.playerStatus = ->
       if $scope.gameOver
+        $scope.player = $scope.winner 
         "Player #{$scope.winner} is the winner!"
       else
         "Player #{$scope.player} to go next"      
 
     $scope.gameStatus = ->
       if $scope.gameOver 
-        "is the winner!" 
+        "Click Restart to try again." 
       else 
         "How far do you want to move the clock forward? 
         The winner is the first to reach exactly midnight."
@@ -169,6 +171,6 @@ angular.module 'StopTheClockApp'
       # return a javascript date object. 
       # The view will ignore all fields but hours and minutes.
       # 
-      hours = if $scope.hours > 24 then 0 else $scope.hours
+      hours = if $scope.hours >= 24 then 0 else $scope.hours
       console.log "#{hours}:#{$scope.minutes}"
       Date.parse "Thu, 01 Jan 1970 #{hours}:#{$scope.minutes}:00 GMT"
