@@ -17,12 +17,21 @@ body {
   color: #333;
 }
 
+/* wrapping class for the step choice buttons 
+to force layout and consistent size */
+.step-choice {
+  display:inline-block; 
+  width:40px; 
+  padding:2px;
+}
+
 .vis {
    display: inline-block;
    position: relative;
    width:100%;
    max-width:500px;
    max-height:500px;
+   pointer-events:none;
 }
 
 /* purpose of this is to set the height of the div to be the same as its width */
@@ -64,13 +73,7 @@ body {
 }
 
 #settings {
-  .reveal {
-    /* The reveal button must be relative too otherwise clock layers
-    above can overlay it and prevent it from responding. */
-    position:absolute; 
-    margin-top:-5px;
-  }
-  .icon-cog {
+  .bigger {
     font-size:1.2em;
   }
 }

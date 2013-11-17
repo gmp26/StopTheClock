@@ -30,6 +30,13 @@ angular.module 'StopTheClockApp'
     $scope.setupGame = !->
       $scope.reset!
 
+    # an array of player information
+    $scope.playerInfo =
+      * id: 1
+        buttonClass: 'btn-info'
+      * id: 2
+        buttonClass: 'btn-danger'
+
     #
     # Put a watch on $scope.gameSetup.minutes to check for an hour carry
     #
@@ -104,6 +111,7 @@ angular.module 'StopTheClockApp'
         $timeout ->
           $scope.hours = hh_original
           $scope.minutes = mm_original
+          $scope.disabled = false
         , 1500ms, true
         #
         # that last false parameter is necessary to get the tests working
@@ -133,9 +141,25 @@ angular.module 'StopTheClockApp'
         "-transform": turn
       }
 
-    $scope.gameStatus = ->
+    $scope.playerStatus = ->
       if $scope.gameOver
-        "Player #{$scope.winner} wins!"
+        "Player #{$scope.winner} is the winner!"
       else
-        "Player #{$scope.player} goes next"
+        "Player #{$scope.player} to go next"      
 
+    $scope.gameStatus = ->
+      if $scope.gameOver 
+        "is the winner!" 
+      else 
+        "How far do you want to move the clock forward? 
+        The winner is the first to reach exactly midnight."
+
+    # Convert hours and minutes to a date object so we can easily render it as hh:mm
+    $scope.date = ->
+      #
+      # return a javascript date object. 
+      # The view will ignore all fields but hours and minutes.
+      # 
+      hours = if $scope.hours > 24 then 0 else $scope.hours
+      console.log "#{hours}:#{$scope.minutes}"
+      Date.parse "Thu, 01 Jan 1970 #{hours}:#{$scope.minutes}:00 GMT"
