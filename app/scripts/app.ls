@@ -14,7 +14,11 @@ angular.module 'StopTheClockApp', ['ngRoute', 'ui.bootstrap']
       templateUrl: 'views/main.html'
       controller: 'MainCtrl'
     }
-    .when '/:hh/:mm/:stepSize/:max', {
+    .when '/:hh/:mm/:stepSize/:stepLimit', {
+      templateUrl: 'views/main.html'
+      controller: 'MainCtrl'
+    }
+    .when '/:hh/:mm/:stepSize/:stepLimit/:max', {
       templateUrl: 'views/main.html'
       controller: 'MainCtrl'
     }

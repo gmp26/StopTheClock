@@ -13,32 +13,52 @@ angular.module 'StopTheClockApp'
     hh = Math.round ~~($routeParams.hh ? 6)
     mm = Math.round ~~($routeParams.mm ? 0)
 
-    # validate stepSize
-    stepSize = Math.round ~~($routeParams.stepSize ? 15)
-    while 60 % stepSize
-      stepSize = stepSize + 1
+    # Let's make the 60 a parameter
+    stepLimit = Math.round ~~($routeParams.stepLimit ? 60)
 
     $scope.gameSetup = {
       hours: hh
       minutes: mm
       max: maxTime    # 12 hour analog or 24 hour digital
       analog: analog
-      stepSize: stepSize
+      stepLimit: stepLimit
     }
+
+    # validate stepSize
+    # stepSize = Math.round ~~($routeParams.stepSize ? (stepLimit / 4))
+    # while stepLimit % stepSize
+    #   stepSize = stepSize + 1
+
+    # validate stepSize
+    validateStepSize = (stepSize) ->
+      return stepSize if $scope.gameSetup.stepLimit % stepSize == 0
+
+      while stepSize >= 1 and $scope.gameSetup.stepLimit % stepSize
+        stepSize = stepSize - 1
+      return stepSize if stepSize > 1
+
+      while stepSize <= $scope.gameSetup.stepLimit and $scope.gameSetup.stepLimit % stepSize
+        stepSize = stepSize + 1
+
+      return stepSize
+
+    $scope.gameSetup.stepSize = validateStepSize Math.round ~~($routeParams.stepSize ? (stepLimit / 4))
 
     # Initially hide game change settings
     $scope.hideSettings = true;
 
-    # valid step sizes are factors of 60
-    # This is a livescript comprehension returning an array
-    $scope.stepSizes = for i from 1 to 60 when 60 % i == 0
-      i
+    # valid step sizes are factors of stepLimit
+    setStepSizes = !->
+      stepLimit = $scope.gameSetup.stepLimit
+
+      # This is a livescript comprehension returning an array
+      $scope.stepSizes = for i from 1 to stepLimit when stepLimit % i == 0
+        i
+
+    setStepSizes!
 
     $scope.setStepSize = (index) ->
-      $scope.gameSetup.setStepSize = $scope.stepSizes[index]
-
-    $scope.setupGame = !->
-      $scope.reset!
+      $scope.gameSetup.stepSize = $scope.stepSizes[index]
 
     # an array of player information
     $scope.playerInfo =
@@ -46,6 +66,16 @@ angular.module 'StopTheClockApp'
         buttonClass: 'btn-info'
       * id: 2
         buttonClass: 'btn-danger'
+
+    #
+    # Put a watch on $scope.gameSetup.stepLimit as we might need to rework stepSizes
+    # and stepSize
+    #
+    $scope.$watch 'gameSetup.stepLimit', (newValue) !->
+      setStepSizes!
+      $scope.gameSetup.stepSize = validateStepSize $scope.gameSetup.stepSize
+
+
 
     #
     # Put a watch on $scope.gameSetup.minutes to check for an hour carry
@@ -78,7 +108,8 @@ angular.module 'StopTheClockApp'
       $scope.hours = $scope.gameSetup.hours
       $scope.minutes = $scope.gameSetup.minutes
       $scope.stepSize = $scope.gameSetup.stepSize
-      $scope.part = 60 / $scope.gameSetup.stepSize
+      $scope.stepLimit = $scope.gameSetup.stepLimit
+      $scope.part = $scope.stepLimit / $scope.stepSize
       $scope.max = $scope.gameSetup.max
       $scope.analog = $scope.max <= 12     # choose type based on max value
       $scope.player = 1
@@ -103,7 +134,7 @@ angular.module 'StopTheClockApp'
       mm_original = $scope.minutes
 
       # make the step
-      $scope.minutes += number * (60 / $scope.part)
+      $scope.minutes += number * $scope.stepSize
       while $scope.minutes >= 60
         ++$scope.hours
         $scope.minutes -= 60

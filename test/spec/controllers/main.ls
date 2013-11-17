@@ -35,6 +35,7 @@ describe 'Controller: MainCtrl', (_) ->
         hh: "10"
         mm: "30"
         stepSize: "5"
+        stepLimit: "60"
         max: "12"
       }
 
@@ -79,8 +80,11 @@ describe 'Controller: MainCtrl', (_) ->
     it 'should map /:hh/:mm/:stepSize to MainCtrl', ->
       expect($route.routes['/:hh/:mm/:stepSize'].controller).toBe('MainCtrl')
 
-    it 'should map /:hh/:mm/:stepSize/:max to MainCtrl', ->
-      expect($route.routes['/:hh/:mm/:stepSize/:max'].controller).toBe('MainCtrl')
+    it 'should map /:hh/:mm/:stepSize/:stepLimit to MainCtrl', ->
+      expect($route.routes['/:hh/:mm/:stepSize/:stepLimit'].controller).toBe('MainCtrl')
+
+    it 'should map /:hh/:mm/:stepSize/:stepLimit/:max to MainCtrl', ->
+      expect($route.routes['/:hh/:mm/:stepSize/:stepLimit/:max'].controller).toBe('MainCtrl')
 
 
   describe 'Testing analog clock game play', (_) ->
@@ -100,6 +104,7 @@ describe 'Controller: MainCtrl', (_) ->
       hh: "3"
       mm: "20"
       stepSize: "5"
+      stepLimit: "60"
       max: "12"
     }
 
@@ -153,7 +158,7 @@ describe 'Controller: MainCtrl', (_) ->
     it 'should detect a player 1 win', ->
       $scope.hours = 11
       $scope.minutes = 30
-      $scope.part = 2 # 30 mins
+      $scope.stepSize = 30 # 30 mins
       $scope.player = 1
       expect($scope.gameOver).toBe false
       $scope.step 1
@@ -163,7 +168,7 @@ describe 'Controller: MainCtrl', (_) ->
     it 'should detect a player 2 win', ->
       $scope.hours = 11
       $scope.minutes = 0
-      $scope.part = 2 # 30 mins
+      $scope.stepSize = 30
       $scope.player = 2
       expect($scope.gameOver).toBe false
       $scope.step 2
@@ -194,7 +199,7 @@ describe 'Controller: MainCtrl', (_) ->
       # before checking our expectations
       $scope.hours = 11
       $scope.minutes = 30
-      $scope.part = 2
+      $scope.stepSize = 30
       $scope.player = 1
       $scope.step 2
 
@@ -230,6 +235,7 @@ describe 'Controller: MainCtrl', (_) ->
       hh: "3"
       mm: "20"
       stepSize: "30"
+      stepLimit: "60"
       max: "24"
     }
 
@@ -253,7 +259,7 @@ describe 'Controller: MainCtrl', (_) ->
     it 'should not detect a player 1 win at 12:00', ->
       $scope.hours = 11
       $scope.minutes = 30
-      $scope.part = 2 # 30 mins
+      $scope.stepSize = 30 # 30 mins
       $scope.player = 1
       $scope.step 1
       expect($scope.gameOver).toBe false
@@ -261,7 +267,7 @@ describe 'Controller: MainCtrl', (_) ->
     it 'should detect a player 1 win', ->
       $scope.hours = 23
       $scope.minutes = 30
-      $scope.part = 2 # 30 mins
+      $scope.stepSize = 30
       $scope.player = 1
       expect($scope.gameOver).toBe false
       $scope.step 1
@@ -271,7 +277,7 @@ describe 'Controller: MainCtrl', (_) ->
     it 'should detect a player 2 win', ->
       $scope.hours = 23
       $scope.minutes = 0
-      $scope.part = 2 # 30 mins
+      $scope.stepSize = 30
       $scope.player = 2
       expect($scope.gameOver).toBe false
       $scope.step 2
@@ -295,7 +301,7 @@ describe 'Controller: MainCtrl', (_) ->
       # before checking our expectations
       $scope.hours = 23
       $scope.minutes = 30
-      $scope.part = 2
+      $scope.stepSize = 30
       $scope.player = 1
       $scope.step 2
 

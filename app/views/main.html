@@ -55,9 +55,24 @@
 
       <form name="setup" class="form-horizontal well" style="min-height:400px">
 
+        <h4>Biggest step allowed</h4>
+        <div class="control-group">
+          <div class="controls">
+            <input
+              class="input-mini"
+              name="stepLimit"
+              type="number"
+              min="0"
+              max="300"
+              required
+              ng-model="gameSetup.stepLimit"
+            > minutes
+          </div>
+        </div>
+
         <h4>Smallest step allowed</h4>
         <div class="control-group">
-          <label class="control-label">{{stepSize}} minutes</label>
+          <label class="control-label">{{gameSetup.stepSize}} minutes</label>
           <div class="controls dropdown">
             <a class="btn dropdown-toggle" href="#">
               Change
@@ -113,7 +128,7 @@
 
         <div class="control-group">
           <div class="controls">
-            <a class="btn btn-primary" href="/#/{{gameSetup.hours}}/{{gameSetup.minutes}}/{{gameSetup.stepSize}}/{{gameSetup.max}}">Load new game</a>
+            <a class="btn btn-primary" href="/#/{{gameSetup.hours}}/{{gameSetup.minutes}}/{{gameSetup.stepSize}}/{{gameSetup.stepLimit}}/{{gameSetup.max}}">Load new game</a>
           </div>
         </div>
 
