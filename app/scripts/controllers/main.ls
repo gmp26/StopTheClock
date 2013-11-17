@@ -8,24 +8,33 @@ angular.module 'StopTheClockApp'
     #
     # When testing, we provide fake values for these
     #
-    hh = ~~($routeParams.hh ? 6)
-    mm = ~~($routeParams.mm ? 0)
+    maxTime = Math.round ~~($routeParams.max ? 12)    # 12 hour analog or 24 hour digital
+    analog = maxTime <= 12
+    hh = Math.round ~~($routeParams.hh ? 6)
+    mm = Math.round ~~($routeParams.mm ? 0)
+
+    stepSize = Math.round ~~($routeParams.stepSize ? 15)
+    while 60 % stepSize
+      stepSize = stepSize + 1
+
     $scope.gameSetup = {
       hours: hh
       minutes: mm
-      part: ~~($routeParams.part ? 4)  # the part of an hour to step by
-      max: ~~($routeParams.max ? 12)    # 12 hour analog or 24 hour digital
-      analog: ~~($routeParams.max ? 12) == 12
+      max: maxTime    # 12 hour analog or 24 hour digital
+      analog: analog
+      stepSize: stepSize
     }
 
     # Initially hide game change settings
     $scope.hideSettings = true;
 
-    $scope.stepSizes = [5,10,15,20,30,60]
+    # valid step sizes are factors of 60
+    # This is a livescript comprehension returning an array
+    $scope.stepSizes = for i from 1 to 60 when 60 % i == 0
+      i
 
     $scope.setStepSize = (index) ->
-      stepSize = $scope.stepSizes[index]
-      $scope.gameSetup.part = 60 / stepSize
+      $scope.gameSetup.setStepSize = $scope.stepSizes[index]
 
     $scope.setupGame = !->
       $scope.reset!
@@ -67,16 +76,16 @@ angular.module 'StopTheClockApp'
       #
       $scope.hours = $scope.gameSetup.hours
       $scope.minutes = $scope.gameSetup.minutes
-      $scope.part = $scope.gameSetup.part
+      $scope.stepSize = $scope.gameSetup.stepSize
+      $scope.part = 60 / $scope.gameSetup.stepSize
       $scope.max = $scope.gameSetup.max
-      $scope.analog = $scope.max == 12     # choose type based on max value
+      $scope.analog = $scope.max <= 12     # choose type based on max value
       $scope.player = 1
       $scope.gameOver = false       # true if game is over
       $scope.winner = null          # the winner number
       $scope.disabled = false       # disables controls if true
-      stepSize = 60/$scope.part
       $scope.steps = for i til $scope.part
-        (i+1) * stepSize
+        (i+1) * $scope.gameSetup.stepSize
 
     $scope.reset!
 
@@ -112,7 +121,7 @@ angular.module 'StopTheClockApp'
           $scope.hours = hh_original
           $scope.minutes = mm_original
           $scope.disabled = false
-        , 1500ms, true
+        , 1500ms, false
         #
         # that last false parameter is necessary to get the tests working
         # It prevents the timer callback function being wrapped in a $scope.$apply call.

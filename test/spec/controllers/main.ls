@@ -33,7 +33,7 @@ describe 'Controller: MainCtrl', (_) ->
       routeParams = {
         hh: "10"
         mm: "30"
-        part: "12"
+        stepSize: "5"
         max: "12"
       }
 
@@ -46,8 +46,8 @@ describe 'Controller: MainCtrl', (_) ->
     #
     # Turn tests
     #
-    it 'should turn minutes hand by 180deg for 30 minutes', ->
-      expect($scope.turn('minute')["-webkit-transform"]).toEqual "rotate(180deg)"
+    it 'should turn minutes hand by 3600+180deg for 10:30 minutes', ->
+      expect($scope.turn('minute')["-webkit-transform"]).toEqual "rotate(3780deg)"
 
     it 'should turn hour hand by 315deg for 10 hours and 30 minutes', ->
       expect($scope.turn('hour')["-webkit-transform"]).toEqual "rotate(315deg)"
@@ -75,8 +75,11 @@ describe 'Controller: MainCtrl', (_) ->
     it 'should map / to MainCtrl', ->
       expect($route.routes['/'].controller).toBe('MainCtrl')
 
-    it 'should map /:hh/:mm/:part to MainCtrl', ->
-      expect($route.routes['/:hh/:mm/:part'].controller).toBe('MainCtrl')
+    it 'should map /:hh/:mm/:stepSize to MainCtrl', ->
+      expect($route.routes['/:hh/:mm/:stepSize'].controller).toBe('MainCtrl')
+
+    it 'should map /:hh/:mm/:stepSize/:max to MainCtrl', ->
+      expect($route.routes['/:hh/:mm/:stepSize/:max'].controller).toBe('MainCtrl')
 
 
   describe 'Testing analog clock game play', (_) ->
@@ -95,7 +98,7 @@ describe 'Controller: MainCtrl', (_) ->
     routeParams = {
       hh: "3"
       mm: "20"
-      part: "12"
+      stepSize: "5"
       max: "12"
     }
 
@@ -131,7 +134,7 @@ describe 'Controller: MainCtrl', (_) ->
     it 'should start at X:20', ->
       expect($scope.minutes).toBe 20
 
-    it 'should start at part = 30', ->
+    it 'should start at part = 12', ->
       expect($scope.part).toBe 12
 
     it 'should start with 12 hour target', ->
@@ -195,7 +198,7 @@ describe 'Controller: MainCtrl', (_) ->
       $scope.step 2
 
       # flush out all outstanding $timeout events
-      # We're using the mock $timeout function from angular_mocks.js
+      # We're using the mock $timeout function from angular_mocks.js here
       $timeout.flush 20000ms
 
       expect($scope.hours).toBe 11
@@ -218,7 +221,7 @@ describe 'Controller: MainCtrl', (_) ->
     routeParams = {
       hh: "3"
       mm: "20"
-      part: "2"
+      stepSize: "30"
       max: "24"
     }
 
@@ -290,7 +293,7 @@ describe 'Controller: MainCtrl', (_) ->
       # flush out all outstanding $timeout events
       # We're using the mock $timeout function from angular_mocks.js
       # flush all events for 1000ms
-      $timeout.flush 1000ms
+      $timeout.flush 20000ms
 
       expect($scope.hours).toBe 23
       expect($scope.minutes).toBe 30

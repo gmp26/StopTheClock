@@ -53,18 +53,18 @@
 
     <div collapse="hideSettings" >
 
-      <form name="setup" class="form-horizontal well">
+      <form name="setup" class="form-horizontal well" style="min-height:400px">
 
         <h4>Smallest step allowed</h4>
         <div class="control-group">
-          <label class="control-label">{{60/gameSetup.part}} minutes</label>
+          <label class="control-label">{{stepSize}} minutes</label>
           <div class="controls dropdown">
             <a class="btn dropdown-toggle" href="#">
               Change
             </a>
             <ul class="dropdown-menu">
-              <li ng-repeat="stepSize in stepSizes">
-                <a ng-click="setStepSize($index)">{{stepSize}}</a>
+              <li ng-repeat="jump in stepSizes">
+                <a ng-click="setStepSize($index)">{{jump}}</a>
               </li>
             </ul>
           </div>
@@ -113,7 +113,7 @@
 
         <div class="control-group">
           <div class="controls">
-            <a class="btn btn-primary" href="/#/{{gameSetup.hours}}/{{gameSetup.minutes}}/{{gameSetup.part}}/{{gameSetup.max}}">Load new game</a>
+            <a class="btn btn-primary" href="/#/{{gameSetup.hours}}/{{gameSetup.minutes}}/{{gameSetup.stepSize}}/{{gameSetup.max}}">Load new game</a>
           </div>
         </div>
 

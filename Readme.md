@@ -25,4 +25,4 @@ $scope.minutes to a javascript Date object, and then using angular's date filter
 
 1. On testing the digital clock we see that we must ensure that the date time does not exceed 23:59. Also, we need to disable the step controls during the period when the clock has exceeded the target and has yet to revert to its previous time.
 
-1. We started by using the parts of an hour (== the button count) to determine the stepSize, but it would be easier if we always input stepSize and calculate the button count. 
+1. We started by using the number of parts of an hour (the button count) to determine the stepSize, but it would be easier if we always input stepSize and calculate the number of parts. Otherwise we get silly behaviour if the number of parts does not yield a sensible step size. 
