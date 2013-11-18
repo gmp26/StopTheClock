@@ -11,8 +11,8 @@
 
   <span class="step-choice" ng-repeat="choice in steps">
     <!-- <button class="btn btn-danger btn-block" ng-click="step($index+1)"> -->
-    <button 
-      class="btn {{playerInfo[player-1].buttonClass}} btn-block" 
+    <button
+      class="btn {{playerInfo[player-1].buttonClass}} btn-block"
       ng-click="step($index+1)"
       ng-disabled="disabled">{{choice}}m</button>
   </span>
@@ -44,11 +44,11 @@
     <button class="btn" ng-click="hideSettings = !hideSettings" >
       <span class="icon-cog bigger"> Settings</span>
     </button>
-   
+
     <button class="btn btn-primary pull-right" ng-click="reset()" >
       <span class="icon-repeat bigger"> Restart</span>
     </button>
-   
+
     <p/>
 
     <div collapse="hideSettings" >

@@ -20,6 +20,7 @@ module.exports = (grunt) ->
     app: 'app'
     dist: 'dist'
     tmp: '.tmp'
+    appName: ''
 
   try
     yeomanConfig.app = require('./bower.json').appPath || yeomanConfig.app
@@ -64,7 +65,7 @@ module.exports = (grunt) ->
           '<%= yeoman.app %>/{,*/}*.html'
           '<%= yeoman.tmp %>/styles/{,*/}*.css'
           '{<%= yeoman.tmp %>,<%= yeoman.app %>}/scripts/{,*/}*.js'
-          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+          '<%= yeoman.app %>/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
 
     "regex-replace":
@@ -218,7 +219,7 @@ module.exports = (grunt) ->
           src: [
             '<%= yeoman.dist %>/scripts/{,*/}*.js'
             '<%= yeoman.dist %>/styles/{,*/}*.css'
-            '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+            # '<%= yeoman.dist %>/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
             '<%= yeoman.dist %>/styles/fonts/*'
           ]
 
@@ -237,18 +238,18 @@ module.exports = (grunt) ->
       dist:
         files: [
           expand: true
-          cwd: '<%= yeoman.app %>/images'
+          cwd: '<%= yeoman.app %>/img'
           src: '{,*/}*.{png,jpg,jpeg}'
-          dest: '<%= yeoman.dist %>/images'
+          dest: '<%= yeoman.dist %>/img'
         ]
 
     svgmin:
       dist:
         files: [
           expand: true
-          cwd: '<%= yeoman.app %>/images'
+          cwd: '<%= yeoman.app %>/img'
           src: '{,*/}*.svg'
-          dest: '<%= yeoman.dist %>/images'
+          dest: '<%= yeoman.dist %>/img'
         ]
 
     cssmin: {}
@@ -302,13 +303,13 @@ module.exports = (grunt) ->
             'bower_components/font-awesome/font/*'
             'bower_components/es5-shim/es5-shim.js'
             'bower_components/json3/lib/json3.min.js'
-            'images/{,*/}*.{gif,webp}'
+            'img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
             'styles/fonts/*'
           ]
         ,
           expand: true,
-          cwd: '<%= yeoman.tmp %>/images'
-          dest: '<%= yeoman.dist %>/images'
+          cwd: '<%= yeoman.tmp %>/img'
+          dest: '<%= yeoman.dist %>/img'
           src: [
             'generated/*'
           ]
@@ -390,6 +391,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask('server', (target) ->
     if (target == 'dist')
+      grunt.config.set 'yeoman.appName', '/approachingMidnight'
       return grunt.task.run(['build', 'open', 'connect:dist:keepalive'])
 
     grunt.task.run([
