@@ -3,11 +3,11 @@
 
   <h1>Approaching Midnight</h1>
   <h4>
-    <button class="btn btn-large {{playerInfo[player-1].buttonClass}}" ng-disabled="!gameOver" style="padding:15px 40px" ng-click="reset()">
+    <button class="btn btn-large btn-block {{playerInfo[player-1].buttonClass}}" ng-disabled="!gameOver" style="margin-top:20px; max-width:500px" ng-click="reset()">
       <strong>{{playerStatus()}}</strong>
     </button>
   </h4>
-  <p>{{gameStatus()}}</p>
+  <p style="max-width:500px">{{gameStatus()}}</p>
 
   <span class="step-choice" ng-repeat="choice in steps">
     <!-- <button class="btn btn-danger btn-block" ng-click="step($index+1)"> -->
