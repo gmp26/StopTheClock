@@ -3,11 +3,11 @@
 
   <h1>Approaching Midnight</h1>
   <h4>
-    <button class="btn btn-large btn-block {{playerInfo[player-1].buttonClass}}" ng-disabled="!gameOver" style="margin-top:20px; max-width:500px" ng-click="reset()">
+    <button class="btn btn-large btn-block not-too-wide {{playerInfo[player-1].buttonClass}}" ng-disabled="!gameOver" style="margin-top:20px" ng-click="reset()">
       <strong>{{playerStatus()}}</strong>
     </button>
   </h4>
-  <p style="max-width:500px">{{gameStatus()}}</p>
+  <p class="not-too-wide">{{gameStatus()}}</p>
 
   <span class="step-choice" ng-repeat="choice in steps">
     <!-- <button class="btn btn-danger btn-block" ng-click="step($index+1)"> -->
@@ -19,7 +19,7 @@
 
   <div style="position:relative; margin-top:60px">
     <div ng-hide="analog">
-    <h1 class="digital-clock" style="max-width:500px">{{date() | date:'HH:mm'}}</h1>
+    <h1 class="digital-clock not-too-wide">{{date() | date:'HH:mm'}}</h1>
     </div>
 
     <div ng-show="analog">
@@ -39,7 +39,7 @@
 
   </div>
 
-  <div id="settings" class="well-small" style="max-width:500px">
+  <div id="settings" class="well-small not-too-wide">
 
     <button class="btn" ng-click="hideSettings = !hideSettings" >
       <span class="icon-cog bigger"> Settings</span>
