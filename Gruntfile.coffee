@@ -297,7 +297,7 @@ module.exports = (grunt) ->
             '*.{ico,png,txt}'
             '.htaccess',
 
-            'bower_components/angular*/**/*.js'
+            '!bower_components/angular*/**/*.js'
             '!bower_components/angular*/**/*.min.js'
             '!bower_components/angular*/angular-mocks/*.js'
             'bower_components/font-awesome/font/*'
