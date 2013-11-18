@@ -3,8 +3,8 @@
 
   <h1>Approaching Midnight</h1>
   <h4>
-    <button class="btn {{playerInfo[player-1].buttonClass}}" ng-disabled="true">
-      {{playerStatus()}}
+    <button class="btn btn-large {{playerInfo[player-1].buttonClass}}" ng-disabled="!gameOver" style="padding:15px 40px" ng-click="reset()">
+      <strong>{{playerStatus()}}</strong>
     </button>
   </h4>
   <p>{{gameStatus()}}</p>

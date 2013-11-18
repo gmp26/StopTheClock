@@ -185,7 +185,7 @@ angular.module 'StopTheClockApp'
     $scope.playerStatus = ->
       if $scope.gameOver
         $scope.player = $scope.winner 
-        "Player #{$scope.winner} is the winner!"
+        "Player #{$scope.winner} wins!  Play again?"
       else
         "Player #{$scope.player} to go next"      
 
