@@ -391,7 +391,6 @@ module.exports = (grunt) ->
 
   grunt.registerTask('server', (target) ->
     if (target == 'dist')
-      grunt.config.set 'yeoman.appName', '/approachingMidnight'
       return grunt.task.run(['build', 'open', 'connect:dist:keepalive'])
 
     grunt.task.run([

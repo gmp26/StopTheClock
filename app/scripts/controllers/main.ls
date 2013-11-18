@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'StopTheClockApp'
-  .controller 'MainCtrl', ($scope, $routeParams, $timeout, $log) ->
+  .controller 'MainCtrl', <[$scope $routeParams $timeout $log]> ++ ($scope, $routeParams, $timeout, $log) ->
 
     # $scope, $routeParams, and $timeout are provided automatically
     # by angular dependency injection.

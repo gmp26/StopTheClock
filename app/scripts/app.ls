@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'StopTheClockApp', ['ngRoute', 'ui.bootstrap']
-  .config ($routeProvider) ->
+  .config <[$routeProvider]> ++ ($routeProvider) ->
     $routeProvider.when '/', {
       templateUrl: 'views/main.html'
       controller: 'MainCtrl'
