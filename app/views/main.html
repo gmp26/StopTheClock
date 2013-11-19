@@ -17,6 +17,12 @@
       ng-disabled="disabled">{{choice}}m</button>
   </span>
 
+  <span class="step-choice">
+    <a class="btn btn-success btn-block" ng-href="#/quest" >
+      <span class="icon-question"></span>
+    </a>
+  </span>
+
   <div style="position:relative; margin-top:60px">
     <div ng-hide="analog">
     <h1 class="digital-clock not-too-wide">{{date() | date:'HH:mm'}}</h1>

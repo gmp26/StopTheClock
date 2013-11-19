@@ -15,5 +15,9 @@ describe 'Controller: QuestCtrl', (_) ->
       $scope: scope
     }
 
-  it 'should attach a list of awesomeThings to the scope', ->
-    expect scope.awesomeThings.length .toBe 7
+  it 'should attach a list of questions to the scope', ->
+    expect scope.questions.length .toBe 24
+
+  it 'should determine whether a question has an image', ->
+    expect(scope.hasImage 0).toBe true
+    expect(scope.hasImage 23).toBe false
