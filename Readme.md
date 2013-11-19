@@ -24,5 +24,7 @@ yo angular-ls:route quest --ls --minsafe
 A `grunt test` confirms that we now have one more passing test for the new view. It's testing that the newly created `QuestCtrl` controller has the usual awesome things listed by yeoman.
 
 Using `grunt server`, we should be able to navigate to the new route. Yes - localhost:9000/#/quest
-returns a page saying `This is the quest view`. Looks like we can start hacking that view...
+returns a page saying `This is the quest view`. Looks like we can start hacking that view. The idea is that we use the space of games created by the main view to illustrate the questions in the quest view.
+
+
 
