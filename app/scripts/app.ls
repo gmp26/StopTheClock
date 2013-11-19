@@ -22,6 +22,9 @@ angular.module 'StopTheClockApp', ['ngRoute', 'ui.bootstrap']
       templateUrl: 'views/main.html'
       controller: 'MainCtrl'
     }
+    .when '/quest',
+      templateUrl: 'views/quest.html',
+      controller: 'QuestCtrl'
     .otherwise {
       redirectTo: '/'
     }
