@@ -6,7 +6,7 @@ A Nim like game designed to give young children practice in handling time while 
 Prerequisites
 -------------
 
-Install [NodeJs](http://nodejs.org/), then [Grunt](http://gruntjs.com/) and [Bower](http://bower.io/).
+Install [NodeJs](http://nodejs.org/), then [Yeoman](http://yeoman.io), [Grunt](http://gruntjs.com/) and [Bower](http://bower.io/).
 
 Step 0
 -----
@@ -17,16 +17,15 @@ A Flash version of the app we want to construct is [published on NRICH](http://n
 
 To start the app off we're going to use yeoman with the generator published at https://github.com/gmp26/generator-angular-ls to scaffold the application. This is a version of the angular generator customised so it can scaffold a project that uses [Livescript](http://livescript.net/) - a language that compiles into javascript. It's like CoffeScript but better.
 
-NB. This generator is under development and will have changed by the time you read this, so to ensure you have the same version, make sure you checkout the commit `b3763b2`. Later versions will probably work better, so if you start your own project, start with the head of the repo `git checkout master`.
+NB. This generator is under development and will have changed by the time you read this, so to ensure you have the same version, make sure you checkout the commit `b3763b2`. Later versions will probably work better, so if you start your own project, start with the head of that repo `git checkout master`.
 
 To install the generator in a directory of your choice:
 
 ```
-git clone https://github.com/gmp26/generator-angular-ls.git
-                  #this will clone the git repository, creating ~/angular/ generator-angular-ls
-cd generator-angular-ls       #make it current
+git clone https://github.com/gmp26/generator-angular-ls.git # download the generator
+cd generator-angular-ls       # make it current
 git checkout b3763b2
-npm link                #this installs a symbolic link to generator-angular-ls so yeoman can find it
+npm link                # this installs a symbolic link to generator-angular-ls so yeoman can find it
 ```
 
 Now we can start StopTheClock
@@ -37,8 +36,7 @@ cd StopTheClock         #make it the current directory
 yo angular-ls --ls      #scaffold a project in LiveScript.
 ```
 
-Yeoman will ask 5 questions, to which you can accept the default 'Yes' answer. Use <space> and the down arrow key to switch off
-the last three options - we won't need `angular-resource`,`cookies`, or `sanitize`. It looks like this:
+Yeoman will ask 5 questions, to which you can accept the default 'Yes' answer. Use <space> and the down arrow key to switch off the last three options - we won't need `angular-resource`,`cookies`, or `sanitize`. It looks like this:
 
 ```
 lapc-br1-253:StopTheClock gmp26$ yo angular-ls --ls
@@ -55,7 +53,7 @@ lapc-br1-253:StopTheClock gmp26$ yo angular-ls --ls
 ❯⬡ angular-sanitize.js
 ```
 
-After hitting return for a final time, `yeoman` will kick off. It will create a skeleton project. In the top level, there will be files called `package.json`, and `bower.json`. These files describe the javascript libraries that are to be installed by `npm` and by `bower`. `Yeoman` will call `npm install` and `bower install` for you, so you will see a lot of network traffic as all these dependencies are pulled in and compiled. `npm` handles the dependencies of the build system, whereas bower handles the dependencies needed by the StopTheClock itself.
+After hitting return for a final time, `yeoman` will create a working skeleton project. In the top level, there will be files called `package.json`, and `bower.json`. These files describe the javascript libraries that are to be installed by `npm` and by `bower`. `Yeoman` will call `npm install` and `bower install` for you, so you will see a lot of network traffic as all these dependencies are pulled in and compiled. `npm` handles the dependencies of the build system, whereas bower handles the dependencies needed by the StopTheClock itself.
 
 
 Now, if all has gone to plan, you should be able to give the command (still from the StopTheClock directory)
@@ -74,4 +72,4 @@ Looking at `http://localhost:9000` you should see an 'Allo Allo' message from ye
 
 This is the base app that we'll turn into StopTheClock running from a nodeJS server installed on your local machine.
 
-This result of this stage is published at https://github.com/gmp26/StopTheClock in branch Step0.
+The result of this stage is published at https://github.com/gmp26/StopTheClock in branch Step0.
