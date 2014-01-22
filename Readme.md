@@ -11,7 +11,7 @@ Install [NodeJs](http://nodejs.org/), then [Yeoman](http://yeoman.io), [Grunt](h
 Step 0
 -----
 
-This starts a 5 step tutorial in building a simple angular app. It's simple because we are creating an interactivity in a single page, which does not interact with a server, and does not require us to build any custom angular services, filters, or directives. That makes it quite good as an introduction.
+This starts a 7 step tutorial in building a simple angular app. It's simple because we are creating an interactivity in a single page, which does not interact with a server, and does not require us to build any custom angular services, filters, or directives. That makes it quite good as an introduction.
 
 A Flash version of the app we want to construct is [published on NRICH](http://nrich.maths.org/content/id/6071/Clock.swf). We're going to make it better using HTML5 and AngularJS. 
 
