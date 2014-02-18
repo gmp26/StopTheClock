@@ -1,5 +1,7 @@
 'use strict'
 
+{is-type} = require 'prelude-ls'
+
 angular.module 'StopTheClockApp'
   .controller 'QuestCtrl', <[$scope]> ++ ($scope) ->
 
@@ -24,7 +26,7 @@ angular.module 'StopTheClockApp'
 
     # Questions
     $scope.questions = [
-      * clock: '1'
+      * clock: 1
         image: true
         hh: '06'
         mm: '00'
@@ -231,7 +233,51 @@ angular.module 'StopTheClockApp'
         para:'Is this an interesting game?'
     ]
 
+    key = (qq) -> "clock#{qq.clock}"
+
+    store = (qq) !-> localStorage.setItem key(qq), "#{qq.ups}:#{qq.downs}"
+
+    load = (qq) !->
+      stored = localStorage.getItem key(qq)
+      [qq.ups, qq.downs] = if is-type 'Array' stored
+        (stored.split ':').map((n)->~~n)
+      else
+        [0, 0]
+
+    getClasses = (qq) ->
+      qq.classes = qq.baseClasses ++ if qq.ups > qq.downs
+        'interesting'
+      else
+        if qq.ups < qq.downs
+          'uninteresting'
+        else
+          ''
+
+
+
+    for qq in $scope.questions
+      qq.baseClasses = ['thumbnail', 'text-center']
+      qq.classes = [] ++ qq.baseClasses
+
+      load qq
+      qq.classes = getClasses qq
+
     $scope.hasImage = (qno) ->
       if $scope.questions[qno].image? then true else false
 
+    $scope.isInteresting = (qq) !->
+      ++qq.ups
+      qq.classes = getClasses qq
+      store qq
+
+    $scope.notInteresting = (qq) !->
+      ++qq.downs
+      qq.classes = getClasses qq
+      store qq
+
+    $scope.reset = !->
+      for qq in $scope.questions
+        qq.ups = 0
+        qq.downs = 0
+        store qq
 

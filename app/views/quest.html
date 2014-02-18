@@ -1,9 +1,12 @@
 <h1>Approaching Midnight</h1>
-<h2>Which of these are interesting questions?</h2>
-
+<h2>Which of these are interesting questions?
+<button class="btn pull-right" ng-click="reset()">
+  <span class="icon-icon-fast-backward"> </span>Start again
+</button>
+</h2>
 <ul class="thumbnails">
   <li class="span4" ng-repeat="qq in questions">
-    <div class="thumbnail text-center">
+    <div ng-class="qq.classes">
       <a ng-href="#/{{qq.hh}}/{{qq.mm}}/{{qq.small}}/{{qq.big}}/{{qq.max}}" ng-show="hasImage($index)">
 
         <img ng-src="img/thumbnails/clock{{qq.clock}}.png" alt="{{qq.max}} hour time {{qq.hh}}:{{qq.mm}} steps {{qq.small}}-{{qq.big}}">
@@ -13,8 +16,11 @@
       <h4>{{qq.para}}</h4>
 <!--       <rating value="rate" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating> -->
       <div class="btn-group">
-        <button class="btn btn-success">
-          <span class="icon-thumbs-up"> </span>This is interesting
+        <button class="btn btn-success" ng-click="isInteresting(qq)">
+          {{qq.ups}} <span class="icon-thumbs-up"> </span>Interesting!
+        </button>
+        <button class="btn btn-default" ng-click="notInteresting(qq)">
+          {{qq.downs}} <span class="icon-thumbs-down"> </span>Later maybe
         </button>
       </div>
     </div>
