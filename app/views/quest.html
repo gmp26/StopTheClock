@@ -16,11 +16,11 @@
       <h4>{{qq.para}}</h4>
 <!--       <rating value="rate" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating> -->
       <div class="btn-group">
-        <button class="btn btn-success" ng-click="isInteresting(qq)">
-          {{qq.ups}} <span class="icon-thumbs-up"> </span>Interesting!
+        <button class="btn btn-danger" ng-click="isInteresting(qq)">
+          {{qq.ups}} <span class="icon-thumbs-up"> </span>Like it!
         </button>
-        <button class="btn btn-default" ng-click="notInteresting(qq)">
-          {{qq.downs}} <span class="icon-thumbs-down"> </span>Later maybe
+        <button class="btn btn-warning" ng-click="notInteresting(qq)">
+          {{qq.downs}} <span class="icon-thumbs-down"> </span>Not now
         </button>
       </div>
     </div>

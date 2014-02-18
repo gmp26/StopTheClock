@@ -219,17 +219,19 @@ module.exports = (grunt) ->
           src: [
             '<%= yeoman.dist %>/scripts/{,*/}*.js'
             '<%= yeoman.dist %>/styles/{,*/}*.css'
-            # '<%= yeoman.dist %>/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+            '<%= yeoman.dist %>/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
             '<%= yeoman.dist %>/styles/fonts/*'
           ]
 
     useminPrepare:
-      html: '<%= yeoman.app %>/index.html'
+      html:'<%= yeoman.app %>/index.html'
       options:
         dest: '<%= yeoman.dist %>'
 
     usemin:
-      html: ['<%= yeoman.dist %>/{,*/}*.html']
+      html: [
+        '<%= yeoman.dist %>/{,*/}*.html'
+      ]
       css: ['<%= yeoman.dist %>/styles/{,*/}*.css']
       options:
         dirs: ['<%= yeoman.dist %>']

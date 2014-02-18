@@ -1,6 +1,6 @@
 'use strict'
 
-{is-type} = require 'prelude-ls'
+{is-type, break-list} = require 'prelude-ls'
 
 angular.module 'StopTheClockApp'
   .controller 'QuestCtrl', <[$scope]> ++ ($scope) ->
@@ -239,10 +239,10 @@ angular.module 'StopTheClockApp'
 
     load = (qq) !->
       stored = localStorage.getItem key(qq)
-      [qq.ups, qq.downs] = if is-type 'Array' stored
-        (stored.split ':').map((n)->~~n)
-      else
-        [0, 0]
+      [qq.ups, qq.downs] = (stored.split ':').map((n)->~~n)
+      unless is-type "Number", qq.downs
+        qq.ups = 0
+        qq.downs = 0
 
     getClasses = (qq) ->
       qq.classes = qq.baseClasses ++ if qq.ups > qq.downs
