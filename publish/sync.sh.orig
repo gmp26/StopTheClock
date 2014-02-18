@@ -1,0 +1,7 @@
+#!/bin/bash
+<<<<<<< Updated upstream
+cd ~/angular/StopTheClock
+=======
+
+>>>>>>> Stashed changes
+rsync -av dist/ gmp26@maths.org:/www/nrich/html/approachingMidnight
