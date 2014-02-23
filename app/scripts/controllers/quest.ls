@@ -239,7 +239,9 @@ angular.module 'StopTheClockApp'
 
     load = (qq) !->
       stored = localStorage.getItem key(qq)
-      [qq.ups, qq.downs] = (stored.split ':').map((n)->~~n)
+      qq.downs = null
+      if is-type 'String' stored
+        [qq.ups, qq.downs] = (stored.split ':').map((n)->~~n)
       unless is-type "Number", qq.downs
         qq.ups = 0
         qq.downs = 0

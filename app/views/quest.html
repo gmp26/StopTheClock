@@ -7,11 +7,13 @@
 <ul class="thumbnails">
   <li class="span4" ng-repeat="qq in questions">
     <div ng-class="qq.classes">
-      <a ng-href="#/{{qq.hh}}/{{qq.mm}}/{{qq.small}}/{{qq.big}}/{{qq.max}}" ng-show="hasImage($index)">
+
+      <a ng-href="#/{{qq.hh}}/{{qq.mm}}/{{qq.small}}/{{qq.big}}/{{qq.max}}" ng-if="hasImage($index)">
 
         <img ng-src="img/thumbnails/clock{{qq.clock}}.png" alt="{{qq.max}} hour time {{qq.hh}}:{{qq.mm}} steps {{qq.small}}-{{qq.big}}">
 
       </a>
+
       <h3>{{qq.header}}{{$index+1}}</h3>
       <h4>{{qq.para}}</h4>
 <!--       <rating value="rate" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating> -->
