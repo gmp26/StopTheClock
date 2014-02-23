@@ -17,7 +17,7 @@
       ng-disabled="disabled">{{choice}}m</button>
   </span>
 
-  <span class="step-choice">
+  <span class="step-choice" ng-if="hasQuestions">
     <a class="btn btn-success btn-block" ng-href="#/quest" >
       <span class="icon-question"></span>
     </a>

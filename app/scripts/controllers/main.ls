@@ -13,6 +13,8 @@ angular.module 'StopTheClockApp'
     hh = Math.round ~~($routeParams.hh ? 6)
     mm = Math.round ~~($routeParams.mm ? 0)
 
+    $scope.hasQuestions = $routeParams.q
+
     # Let's make the 60 a parameter
     stepLimit = Math.round ~~($routeParams.stepLimit ? 60)
 
