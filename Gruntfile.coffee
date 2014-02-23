@@ -427,7 +427,7 @@ module.exports = (grunt) ->
     'ngmin'
     'cssmin'
     'uglify'
-    'rev'
+    #'rev'
     'usemin'
   ])
 

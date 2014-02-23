@@ -1,5 +1,7 @@
 'use strict'
 
+{is-type} = require 'prelude-ls'
+
 angular.module 'StopTheClockApp'
   .controller 'MainCtrl', <[$scope $routeParams $timeout $log]> ++ ($scope, $routeParams, $timeout, $log) ->
 
@@ -13,7 +15,11 @@ angular.module 'StopTheClockApp'
     hh = Math.round ~~($routeParams.hh ? 6)
     mm = Math.round ~~($routeParams.mm ? 0)
 
-    $scope.hasQuestions = $routeParams.q
+    noq = $routeParams.noq
+    if noq and is-type 'String' noq
+      noq = !(noq == '0' or noq.toLowerCase! == 'false')
+
+    $scope.hasQuestions = !noq
 
     # Let's make the 60 a parameter
     stepLimit = Math.round ~~($routeParams.stepLimit ? 60)
