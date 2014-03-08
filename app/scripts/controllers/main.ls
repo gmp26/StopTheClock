@@ -213,3 +213,7 @@ angular.module 'StopTheClockApp'
       hours = if $scope.hours >= 24 then 0 else $scope.hours
       console.log "#{hours}:#{$scope.minutes}"
       Date.parse "Thu, 01 Jan 1970 #{hours}:#{$scope.minutes}:00 GMT"
+
+    $scope.ai =
+      playComputer: true
+      userFirst: true

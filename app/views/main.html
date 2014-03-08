@@ -1,9 +1,9 @@
 
-<div>
+<div class="not-too-wide">
 
   <h1>Approaching Midnight</h1>
   <h4>
-    <button class="btn btn-large btn-block not-too-wide {{playerInfo[player-1].buttonClass}}" ng-disabled="!gameOver" style="margin-top:20px" ng-click="reset()">
+    <button class="btn btn-large btn-block  {{playerInfo[player-1].buttonClass}}" ng-disabled="!gameOver" style="margin-top:20px" ng-click="reset()">
       <strong>{{playerStatus()}}</strong>
     </button>
   </h4>
@@ -22,6 +22,19 @@
       <span class="icon-question"></span>
     </a>
   </span>
+
+  <div style="display:inline-block;float:right">
+    <label class="checkbox inline">
+      <input type="checkbox" ng-model="ai.playComputer">
+      Play computer
+    </label>
+  
+    <label class="checkbox inline">
+      <input type="checkbox"  ng-model="ai.userFirst">
+      Play first
+    </label>
+  </div>
+
 
   <div style="position:relative; margin-top:60px">
     <div ng-hide="analog">
