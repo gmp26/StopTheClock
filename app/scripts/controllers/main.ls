@@ -51,6 +51,43 @@ angular.module 'StopTheClockApp'
 
     $scope.gameSetup.stepSize = validateStepSize Math.round ~~($routeParams.stepSize ? (stepLimit / 4))
 
+    traceWinners = ->
+      console.log "winners are:"
+      for t in $scope.winners
+        console.log "#{t} = #{Math.floor(t / 60)} : #{t % 60}"
+
+    $scope.getWinningPositions = ->
+
+      console.log "Smallest step is #{$scope.steps.0}"
+
+      maxMinutes = 60 * $scope.gameSetup.max
+      interval = $scope.gameSetup.stepLimit + $scope.steps.0
+      [t for t from maxMinutes to 0 by -interval when t >= 0]
+
+    $scope.computerPlays = ->
+      minutes = $scope.hours*60 + $scope.minutes
+
+      # test each step
+      for val, number in $scope.steps
+        newMinutes = minutes + (number + 1) * $scope.stepSize
+        if newMinutes in $scope.winners
+          return $scope.step (number + 1)
+
+      $scope.step Math.ceil ($scope.steps.length * Math.random!)
+
+
+    thought = 0
+    $scope.computerThinks = ->
+      if thought >= $scope.steps.length
+        $scope.computerPlays!
+        thought := 0
+      else
+        thought := thought + 1
+        $timeout $scope.computerThinks, 1000 
+
+    $scope.stepDisabled = (number) ->
+      return !$scope.playerInfo[$scope.player].isComputer
+
     # Initially hide game change settings
     $scope.hideSettings = true;
 
@@ -133,12 +170,22 @@ angular.module 'StopTheClockApp'
           buttonClass: 'btn-danger'
           isComputer: true
 
+      $scope.winners = $scope.getWinningPositions!
+      traceWinners!
+
+      $scope.stepButtonClass = $scope.playerInfo[$scope.player].buttonClass
+
+
     $scope.reset!
+
 
     $scope.start = !->
       $scope.player = 0
       $scope.gameOver = false
       console.log "start player #{$scope.player}"
+
+      if $scope.playerInfo.0.isComputer
+        $scope.computerThinks!
 
     # return the other player number from the one given
     otherPlayer = (playerNumber) -> 
@@ -166,8 +213,9 @@ angular.module 'StopTheClockApp'
       if $scope.hours == $scope.max and $scope.minutes == 0
         $scope.gameOver = true
         $scope.winner = $scope.player
+        $timeout $scope.alarm, 500
 
-      if $scope.hours > $scope.max or ($scope.hours == $scope.max and $scope.minutes > 0)
+      else if $scope.hours > $scope.max or ($scope.hours == $scope.max and $scope.minutes > 0)
         # we've gone past 12:00 or 24:00, disable the controls
         $scope.disabled = true
 
@@ -186,6 +234,9 @@ angular.module 'StopTheClockApp'
 
       # switch players whatever happens
       $scope.player = otherPlayer $scope.player
+
+      if !$scope.gameOver && $scope.playerInfo[$scope.player].isComputer
+        $scope.computerThinks!
 
 
     # supports ng-style="turn('minute')" directive
