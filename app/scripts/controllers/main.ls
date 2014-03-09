@@ -1,8 +1,12 @@
 'use strict'
 
-{is-type} = require 'prelude-ls'
+{is-type, split-at} = require 'prelude-ls'
 
 angular.module 'StopTheClockApp'
+  .factory 'ai', -> {
+    myTurn: false
+
+  }
   .controller 'MainCtrl', <[$scope $routeParams $timeout $log]> ++ ($scope, $routeParams, $timeout, $log) ->
 
     # $scope, $routeParams, and $timeout are provided automatically
@@ -31,11 +35,6 @@ angular.module 'StopTheClockApp'
       analog: analog
       stepLimit: stepLimit
     }
-
-    # validate stepSize
-    # stepSize = Math.round ~~($routeParams.stepSize ? (stepLimit / 4))
-    # while stepLimit % stepSize
-    #   stepSize = stepSize + 1
 
     # validate stepSize
     validateStepSize = (stepSize) ->
@@ -68,12 +67,6 @@ angular.module 'StopTheClockApp'
     $scope.setStepSize = (index) ->
       $scope.gameSetup.stepSize = $scope.stepSizes[index]
 
-    # an array of player information
-    $scope.playerInfo =
-      * id: 1
-        buttonClass: 'btn-info'
-      * id: 2
-        buttonClass: 'btn-danger'
 
     #
     # Put a watch on $scope.gameSetup.stepLimit as we might need to rework stepSizes
@@ -120,22 +113,44 @@ angular.module 'StopTheClockApp'
       $scope.part = $scope.stepLimit / $scope.stepSize
       $scope.max = $scope.gameSetup.max
       $scope.analog = $scope.max <= 12     # choose type based on max value
-      $scope.player = 1
-      $scope.gameOver = false       # true if game is over
+      $scope.player = 0
+      $scope.gameOver = true       # true if game is over
       $scope.winner = null          # the winner number
       $scope.disabled = false       # disables controls if true
       $scope.steps = for i til $scope.part
         (i+1) * $scope.gameSetup.stepSize
+      $scope.ai =
+        playComputer: true
+        userFirst: true
+      console.log "reset player #{$scope.player}"
+
+      # an array of player information
+      $scope.playerInfo =
+        * id: 0
+          buttonClass: 'btn-info'
+          isComputer: false
+        * id: 1
+          buttonClass: 'btn-danger'
+          isComputer: true
 
     $scope.reset!
 
+    $scope.start = !->
+      $scope.player = 0
+      $scope.gameOver = false
+      console.log "start player #{$scope.player}"
+
     # return the other player number from the one given
-    otherPlayer = (playerNumber) -> 3 - playerNumber
+    otherPlayer = (playerNumber) -> 
+      console.log "player now #{1 - playerNumber}"
+      1 - playerNumber
 
     #
     # ! before -> here because I don't want a return value
     #
     $scope.step = (number) !->
+
+      $scope.gameOver = false
 
       # in case we have to revert...
       hh_original = $scope.hours
@@ -190,12 +205,24 @@ angular.module 'StopTheClockApp'
         "-transform": turn
       }
 
+    $scope.playerName = (player) ->
+      info = $scope.playerInfo[player]
+      c = if info.isComputer
+        " (computer)"
+      else
+        ""
+      "Player #{player + 1}#{c}"
+
     $scope.playerStatus = ->
       if $scope.gameOver
-        $scope.player = $scope.winner
-        "Player #{$scope.winner} wins!  Play again?"
+        if($scope.winner)
+          "#{$scope.playerName $scope.winner} wins!  Play again?"
+        else if($scope.ai.playComputer)
+          "Press to play computer"
+        else
+          "Press to start game"
       else
-        "Player #{$scope.player} to go next"
+        "#{$scope.playerName $scope.player} to go next"
 
     $scope.gameStatus = ->
       if $scope.gameOver
@@ -211,9 +238,27 @@ angular.module 'StopTheClockApp'
       # The view will ignore all fields but hours and minutes.
       #
       hours = if $scope.hours >= 24 then 0 else $scope.hours
-      console.log "#{hours}:#{$scope.minutes}"
+      # console.log "#{hours}:#{$scope.minutes}"
       Date.parse "Thu, 01 Jan 1970 #{hours}:#{$scope.minutes}:00 GMT"
 
-    $scope.ai =
-      playComputer: true
-      userFirst: true
+    $scope.updateRoles = ->
+      if $scope.ai.playComputer
+        $scope.playerInfo.0.isComputer = not $scope.ai.userFirst
+        $scope.playerInfo.1.isComputer = $scope.ai.userFirst
+      else
+        $scope.playerInfo.0.isComputer = false
+        $scope.playerInfo.1.isComputer = false
+
+    $scope.userFirstChanged = ->
+      $scope.ai.userFirst = not $scope.ai.userFirst
+      $scope.updateRoles!
+
+    $scope.playComputerChanged = ->
+      $scope.ai.playComputer = not $scope.ai.playComputer
+      $scope.updateRoles!
+
+    $scope.alarm = !->
+      $scope.ring!
+      $scope.bounce!
+
+
