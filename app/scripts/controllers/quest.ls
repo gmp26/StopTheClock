@@ -239,7 +239,9 @@ angular.module 'StopTheClockApp'
 
     load = (qq) !->
       stored = localStorage.getItem key(qq)
-      [qq.ups, qq.downs] = (stored.split ':').map((n)->~~n)
+      qq.downs = "a"
+      if stored
+        [qq.ups, qq.downs] = (stored.split ':').map((n)->~~n)
       unless is-type "Number", qq.downs
         qq.ups = 0
         qq.downs = 0
@@ -252,8 +254,6 @@ angular.module 'StopTheClockApp'
           'uninteresting'
         else
           ''
-
-
 
     for qq in $scope.questions
       qq.baseClasses = ['thumbnail', 'text-center']
@@ -279,5 +279,6 @@ angular.module 'StopTheClockApp'
       for qq in $scope.questions
         qq.ups = 0
         qq.downs = 0
+        qq.classes = getClasses qq
         store qq
 
