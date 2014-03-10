@@ -1,7 +1,10 @@
 <h1>Approaching Midnight</h1>
 <h2>Which of these are interesting questions?
-<button class="btn pull-right" ng-click="reset()">
-  <span class="icon-icon-fast-backward"> </span>Start again
+<div class="btn-group pull-right">
+  <a class="btn btn-primary" href="mailto:{{mailTo}}?subject={{mailSubject}}&amp;body={{mailBody()}}"><i class="icon-share icon-white"></i> Share</a>
+  <button class="btn btn-default" ng-click="reset()">
+    <span class="icon-remove"> </span>Clear our likes
+  </button>
 </button>
 </h2>
 <ul class="thumbnails">

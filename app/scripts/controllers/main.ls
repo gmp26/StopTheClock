@@ -65,6 +65,7 @@ angular.module 'StopTheClockApp'
       [t for t from maxMinutes to 0 by -interval when t >= 0]
 
     $scope.computerPlays = ->
+      $scope.thinking = false
       minutes = $scope.hours*60 + $scope.minutes
 
       # test each step
@@ -78,6 +79,7 @@ angular.module 'StopTheClockApp'
 
     thought = 0
     $scope.computerThinks = ->
+      $scope.thinking = true
       if thought >= $scope.steps.length
         $scope.computerPlays!
         thought := 0
@@ -174,7 +176,7 @@ angular.module 'StopTheClockApp'
       traceWinners!
 
       $scope.stepButtonClass = $scope.playerInfo[$scope.player].buttonClass
-
+      $scope.thinking = false
 
     $scope.reset!
 
@@ -214,6 +216,7 @@ angular.module 'StopTheClockApp'
         $scope.gameOver = true
         $scope.winner = $scope.player
         $timeout $scope.alarm, 500
+        return
 
       else if $scope.hours > $scope.max or ($scope.hours == $scope.max and $scope.minutes > 0)
         # we've gone past 12:00 or 24:00, disable the controls
@@ -264,16 +267,47 @@ angular.module 'StopTheClockApp'
         ""
       "Player #{player + 1}#{c}"
 
+    winLines = [
+      "I win! Would you like to play again?"
+      "Gotcha! Want another game?"
+      "Oh dear, I won."
+      "Computers rule!"
+      "I beat my programmer too!"
+    ]
+
+    loseLines = [
+      "You win! What did I do wrong?"
+      "You win! Are you just lucky?"
+      "I'm going to try harder"
+      "OK, so humans can win"
+    ]
+
+    pickFrom = (list) ->
+      r = Math.floor (list.length * Math.random!)
+      list[r]
+
     $scope.playerStatus = ->
       if $scope.gameOver
-        if($scope.winner)
-          "#{$scope.playerName $scope.winner} wins!  Play again?"
+        if($scope.winner != null)
+          if $scope.playerInfo[$scope.player].isComputer
+            pickFrom winLines #"I win! Would you like to play again?"
+          else
+            if($scope.ai.playComputer)
+              pickFrom loseLines
+              # "You win! Would you like to play again?"
+            else
+              "#{$scope.playerName $scope.winner} wins!  Play again?"
         else if($scope.ai.playComputer)
-          "Press to play computer"
+          "Press to play me"
         else
           "Press to start game"
       else
-        "#{$scope.playerName $scope.player} to go next"
+        if $scope.thinking
+          "I'm thinking "
+        else if($scope.ai.playComputer)
+          "Your turn"
+        else
+          "#{$scope.playerName $scope.player} to go next"
 
     $scope.gameStatus = ->
       if $scope.gameOver
@@ -311,5 +345,7 @@ angular.module 'StopTheClockApp'
     $scope.alarm = !->
       $scope.ring!
       $scope.bounce!
+      # $scope.playerStatus!
+      $timeout $scope.reset, 5000
 
 

@@ -24,6 +24,14 @@ angular.module 'StopTheClockApp'
     #     stateOff: 'icon-off'
     # ]
 
+    $scope.likes = ->
+      ["Q%20#{qq.clock}:%20likes:%20#{qq.ups}%20not%20nows:%20#{qq.downs}" for qq in $scope.questions when qq.ups>0 or qq.downs] * "%0A"
+
+    $scope.mailTo = "primary.nrich@maths.org"
+    $scope.mailSubject = "Approaching%20Midnight%20-%20interesting%20questions"
+    $scope.mailBody = ->
+      "An%20interesting%20question%20is%20...%0A%0AI/we%20voted%20like%20this%0A#{$scope.likes!}"
+
     # Questions
     $scope.questions = [
       * clock: 1

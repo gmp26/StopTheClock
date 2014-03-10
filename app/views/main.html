@@ -6,6 +6,7 @@
   <h4>
     <button class="btn btn-large btn-block  {{playerInfo[player].buttonClass}}" ng-disabled="!gameOver" style="margin-top:20px" ng-click="start()">
       <strong>{{playerStatus()}}</strong>
+      <i ng-show="thinking" class="icon-refresh icon-spin icon-white"> </i>
     </button>
   </h4>
   <p class="not-too-wide">{{gameStatus()}}</p>
@@ -15,7 +16,7 @@
     <button
       class="btn {{playerInfo[player].buttonClass}} btn-block"
       ng-click="step($index+1)"
-      ng-disabled="gameOver">{{choice}}m</button>
+      ng-disabled="gameOver || thinking">{{choice}}m</button>
   </span>
 
   <span class="step-choice" ng-if="hasQuestions && gameOver">
