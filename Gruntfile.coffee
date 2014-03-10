@@ -305,6 +305,8 @@ module.exports = (grunt) ->
             'bower_components/font-awesome/font/*'
             'bower_components/es5-shim/es5-shim.js'
             'bower_components/json3/lib/json3.min.js'
+            'bell.mp3'
+            'bell.ogg'
             'img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
             'styles/fonts/*'
           ]
@@ -427,7 +429,7 @@ module.exports = (grunt) ->
     'ngmin'
     'cssmin'
     'uglify'
-    'rev'
+    #'rev'
     'usemin'
   ])
 

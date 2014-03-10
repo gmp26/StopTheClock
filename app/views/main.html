@@ -1,9 +1,10 @@
+<bell></bell>
 
-<div>
+<div class="not-too-wide">
 
   <h1>Approaching Midnight</h1>
   <h4>
-    <button class="btn btn-large btn-block not-too-wide {{playerInfo[player-1].buttonClass}}" ng-disabled="!gameOver" style="margin-top:20px" ng-click="reset()">
+    <button class="btn btn-large btn-block  {{playerInfo[player].buttonClass}}" ng-disabled="!gameOver" style="margin-top:20px" ng-click="start()">
       <strong>{{playerStatus()}}</strong>
     </button>
   </h4>
@@ -12,16 +13,29 @@
   <span class="step-choice" ng-repeat="choice in steps">
     <!-- <button class="btn btn-danger btn-block" ng-click="step($index+1)"> -->
     <button
-      class="btn {{playerInfo[player-1].buttonClass}} btn-block"
+      class="btn {{playerInfo[player].buttonClass}} btn-block"
       ng-click="step($index+1)"
-      ng-disabled="disabled">{{choice}}m</button>
+      ng-disabled="gameOver">{{choice}}m</button>
   </span>
 
-  <span class="step-choice">
-    <a class="btn btn-success btn-block" ng-href="#/quest" >
-      <span class="icon-question"></span>
-    </a>
+  <span class="step-choice" ng-if="hasQuestions && gameOver">
+    <a class="btn btn-success btn-block" ng-href="#/quest"><span class="icon-question"></span></a>
   </span>
+
+  <div style="display:inline-block;float:right">
+
+    <label class="checkbox inline" ng-show="ai.playComputer">
+      <input type="checkbox" ng-disabled="!gameOver" ng-model="ai.userFirst" ng-click="userFirstChanged()">
+      Play first
+    </label>
+  
+    <label class="checkbox inline" >
+      <input type="checkbox" ng-disabled="!gameOver" ng-model="ai.playComputer" ng-click="playComputerChanged()">
+      Play computer
+    </label>
+
+  </div>
+
 
   <div style="position:relative; margin-top:60px">
     <div ng-hide="analog">
@@ -31,7 +45,7 @@
     <div ng-show="analog">
       <div id="vis" class="vis">
         <div class="set-height" />
-          <div class="clock" >
+          <div class="clock" bouncer>
             <img src="img/clockFace.png" class="clock-image"/>
             <img src="img/minuteShadow.png" class="clock-image-shadow" ng-style="turn('minute')" />
             <img src="img/minuteHand.png" class="clock-image" ng-style="turn('minute')" />
@@ -47,7 +61,7 @@
 
   <div id="settings" class="well-small not-too-wide">
 
-    <button class="btn" ng-click="hideSettings = !hideSettings" >
+    <button class="btn" ng-click="hideSettings = !hideSettings" ng-disabled="!gameOver">
       <span class="icon-cog bigger"> Settings</span>
     </button>
 
@@ -60,6 +74,7 @@
     <div collapse="hideSettings" >
 
       <form name="setup" class="form-horizontal well" style="min-height:400px">
+
 
         <h4>Biggest step allowed</h4>
         <div class="control-group">
@@ -134,7 +149,8 @@
 
         <div class="control-group">
           <div class="controls">
-            <a class="btn btn-primary" ng-href="#/{{gameSetup.hours}}/{{gameSetup.minutes}}/{{gameSetup.stepSize}}/{{gameSetup.stepLimit}}/{{gameSetup.max}}">Load new game</a>
+            <a class="btn btn-primary" ng-href="#/{{gameSetup.hours}}/{{gameSetup.minutes}}/{{gameSetup.stepSize}}/{{gameSetup.stepLimit}}/{{gameSetup.max}}?noq={{1-hasQuestions}}">Load new game</a>
+            <button class="btn btn-default" ng-click="alarm()">Test alarm!</button>
           </div>
         </div>
 

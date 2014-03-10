@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'StopTheClockApp', ['ngRoute', 'ui.bootstrap']
+angular.module 'StopTheClockApp', ['ngRoute', 'ui.bootstrap', 'bellDirective', 'bouncerDirective']
   .config <[$routeProvider]> ++ ($routeProvider) ->
     $routeProvider.when '/', {
       templateUrl: 'views/main.html'
@@ -25,6 +25,7 @@ angular.module 'StopTheClockApp', ['ngRoute', 'ui.bootstrap']
     .when '/quest',
       templateUrl: 'views/quest.html',
       controller: 'QuestCtrl'
+      
     .otherwise {
       redirectTo: '/'
     }
