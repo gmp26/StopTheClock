@@ -80,7 +80,7 @@ angular.module 'StopTheClockApp'
     thought = 0
     $scope.computerThinks = ->
       $scope.thinking = true
-      if thought >= $scope.steps.length
+      if thought >= 4
         $scope.computerPlays!
         thought := 0
       else
