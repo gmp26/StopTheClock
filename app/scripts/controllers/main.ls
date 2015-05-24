@@ -85,7 +85,7 @@ angular.module 'StopTheClockApp'
         thought := 0
       else
         thought := thought + 1
-        $timeout $scope.computerThinks, 1000 
+        $timeout $scope.computerThinks, 30000 
 
     $scope.stepDisabled = (number) ->
       return !$scope.playerInfo[$scope.player].isComputer
